@@ -1,10 +1,12 @@
 ---
+os:
+- linux
+- osx
 language: ruby
-sudo: false
 cache: bundler
 before_install: gem install bundler -v 2.1.2
 script: bundle exec rspec
-matrix:
+jobs:
   fast_finish: true
   include:
   - rvm: 2.7.0
