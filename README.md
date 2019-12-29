@@ -1,4 +1,4 @@
-# Siege
+# Siege &middot; [![Gem Version](https://badge.fury.io/rb/siege.svg)](https://badge.fury.io/rb/siege) [![Build Status](https://travis-ci.org/0exp/siege.svg?branch=master)](https://travis-ci.org/0exp/siege)
 
 Software architecture principles realized as a code.
 
