@@ -1,0 +1,14 @@
+---
+language: ruby
+sudo: false
+cache: bundler
+before_install: gem install bundler -v 2.1.2
+script: bundle exec rspec
+matrix:
+  fast_finish: true
+  include:
+  - rvm: 2.7.0
+  allow_failures:
+  - rvm: jruby-head
+  - rvm: ruby-head
+  - rvm: truffleruby
