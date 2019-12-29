@@ -1,7 +1,4 @@
 ---
-os:
-- linux
-- osx
 language: ruby
 cache: bundler
 before_install: gem install bundler -v 2.1.2
@@ -10,7 +7,6 @@ jobs:
   fast_finish: true
   include:
   - rvm: 2.7.0
-  allow_failures:
-  - rvm: jruby-head
-  - rvm: ruby-head
-  - rvm: truffleruby
+    os:
+    - linux
+    - osx
