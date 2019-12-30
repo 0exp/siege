@@ -2,7 +2,7 @@
 
 RSpec.describe 'System Loaders' do
   specify 'Raw creation of a simple loader' do
-    stub_const('LoggingModule', Class.new(Siege::System::Loader::Abstract) do
+    stub_const('LoggingModule', Class.new(Siege::System::Loader) do
       init  { puts '[-initialize-]' }
       start { puts '[-start-]' }
       stop  { puts '[-stop-]' }

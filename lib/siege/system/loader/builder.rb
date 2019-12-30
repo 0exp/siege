@@ -4,7 +4,7 @@
 # @since 0.1.0
 class Siege::System::Loader::Builder
   class << self
-    # @param loader_klass [Class<Siege::System::Loader::Abstract>]
+    # @param loader_klass [Class<Siege::System::Loader>]
     # @return [void]
     #
     # @api private
@@ -14,7 +14,7 @@ class Siege::System::Loader::Builder
     end
   end
 
-  # @param loader_klass [Class<Siege::System::Loader::Abstract>]
+  # @param loader_klass [Class<Siege::System::Loader>]
   # @return [void]
   #
   # @api private
@@ -34,7 +34,7 @@ class Siege::System::Loader::Builder
     @after_stop   = Siege::System::Loader::Step::Callbacks.new
   end
 
-  # @return [Siege::System::Loader::Abstract]
+  # @return [Siege::System::Loader]
   #
   # @api private
   # @since 0.1.0
@@ -54,7 +54,7 @@ class Siege::System::Loader::Builder
 
   private
 
-  # @return [Class<Siege::System::Loader::Abstract>]
+  # @return [Class<Siege::System::Loader>]
   #
   # @api private
   # @since 0.1.0
@@ -109,7 +109,7 @@ class Siege::System::Loader::Builder
   # @since 0.1.0
   attr_reader :after_stop
 
-  # @return [Siege::System::Loader::Abstract]
+  # @return [Siege::System::Loader]
   #
   # @api private
   # @since 0.1.0

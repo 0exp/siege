@@ -7,7 +7,7 @@ module Siege::System::Loader::DSL
   require_relative 'dsl/command_set'
 
   class << self
-    # @param child_klass [Class<Siege::System::Loader::Abstract>]
+    # @param child_klass [Class<Siege::System::Loader>]
     # @return [void]
     #
     # @api private
