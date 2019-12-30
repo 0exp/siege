@@ -32,4 +32,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec',            '~> 3.9'
   spec.add_development_dependency 'armitage-rubocop', '~> 0.78'
   spec.add_development_dependency 'simplecov',        '~> 0.17'
+  spec.add_development_dependency 'pry',              '~> 0.12'
 end

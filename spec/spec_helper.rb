@@ -8,6 +8,7 @@ SimpleCov.start { add_filter 'spec' }
 
 require 'bundler/setup'
 require 'siege'
+require 'pry'
 
 RSpec.configure do |config|
   Kernel.srand config.seed
