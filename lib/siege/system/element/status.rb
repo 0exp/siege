@@ -125,10 +125,12 @@ class Siege::System::Element::Status
   # @api private
   # @since 0.1.0
   def intercept_ambiguous_status_transition!(correct_initials:, to:)
-    raise(Siege::System::AmbiguousElementStatusError, <<~ERROR_MESSAGE)
-      :#{current_status} status can not be transitioned to :#{to} status!
-      You can trasit to :#{to} status only from the one of #{correct_initials}!
-    ERROR_MESSAGE
+    unless correct_initials.include?(to)
+      raise(Siege::System::AmbiguousElementStatusError, <<~ERROR_MESSAGE)
+        :#{current_status} status can not be transitioned to :#{to} status!
+        You can trasit to :#{to} status only from the one of #{correct_initials}!
+      ERROR_MESSAGE
+    end
   end
 
   # @param block [Block]
