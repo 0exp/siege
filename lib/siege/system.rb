@@ -5,4 +5,5 @@
 module Siege::System
   require_relative 'system/errors'
   require_relative 'system/loader'
+  require_relative 'system/element'
 end
