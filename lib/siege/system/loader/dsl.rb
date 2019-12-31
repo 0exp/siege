@@ -131,6 +131,38 @@ module Siege::System::Loader::DSL
       @on_stop = Commands::Stop.new(expression)
     end
 
+    # @param process_type [String, Symbol]
+    # @param expression [Block]
+    # @return [void]
+    #
+    # @api public
+    # @since 0.1.0
+    def before(process_type, &expression)
+      case process_type
+      when :init  then before_init(&expression)
+      when :start then before_start(&expression)
+      when :stop  then before_stop(&expression)
+      else
+        raise(Siege::System::ArgumentError, "Incompatible before-callback type #{process_type}")
+      end
+    end
+
+    # @param process_type [String, Symbol]
+    # @param expression [Block]
+    # @return [void]
+    #
+    # @api public
+    # @since 0.1.0
+    def after(process_type, &expression)
+      case process_type
+      when :init  then after_init(&expression)
+      when :start then after_start(&expression)
+      when :stop  then after_stop(&expression)
+      else
+        raise(Siege::System::ArgumentError, "Incompatible after-callback type #{process_type}")
+      end
+    end
+
     # @param expression [Block]
     # @return [void]
     #

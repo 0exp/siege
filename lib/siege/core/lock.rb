@@ -11,7 +11,7 @@ class Siege::Core::Lock
     @mutex = Mutex.new
   end
 
-  # @param block [Proc]
+  # @param block [Block]
   # @return [Any]
   #
   # @api public

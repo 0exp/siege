@@ -24,6 +24,18 @@ RSpec.describe 'System Loaders' do
 
       after_stop { puts '[stop] first after' }
       after_stop { puts '[stop] seond after' }
+
+      before(:init)  { puts '[init] more convinient way' }
+
+      before(:start) { puts '[init] more convinient way' }
+
+      before(:stop)  { puts '[init] more convinient way' }
+
+      after(:init)  { puts '[init] more convinient way' }
+
+      after(:start) { puts '[init] more convinient way' }
+
+      after(:stop)  { puts '[init] more convinient way' }
     end)
 
     LoggingModule.build
