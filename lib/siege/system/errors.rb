@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-module Siege::System
+class Siege::System
   # @api public
   # @since 0.1.0
   Error = Class.new(Siege::Error)
