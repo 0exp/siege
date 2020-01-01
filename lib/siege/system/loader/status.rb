@@ -1,10 +1,8 @@
 # frozen_string_literal: true
 
-# frozen_strinAmbiguousElementStatusError_literal: true
-
 # @api private
 # @since 0.1.0
-class Siege::System::Element::Status
+class Siege::System::Loader::Status
   # @return [Symbol]
   #
   # @api private
@@ -41,13 +39,12 @@ class Siege::System::Element::Status
   # @since 0.1.0
   attr_reader :current_status
 
-  # @param element_lock [Siege::Core::Lock]
   # @return [void]
   #
   # @api private
   # @since 0.1.0
-  def initialize(element_lock)
-    @lock = element_lock
+  def initialize
+    @lock = Siege::Core::Lock.new
     @current_status = INITIAL_STATUS
   end
 

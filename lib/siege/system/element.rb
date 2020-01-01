@@ -3,8 +3,6 @@
 # @api private
 # @since 0.1.0
 class Siege::System::Element
-  require_relative 'element/status'
-
   # @return [Siege::System::Loader]
   #
   # @api private
@@ -19,7 +17,6 @@ class Siege::System::Element
   def initialize(loader)
     @loader = loader
     @lock = Siege::Core::Lock.new
-    @status = Siege::System::Element::Status.new(@lock)
   end
 
   private

@@ -6,6 +6,7 @@ class Siege::System::Loader
   require_relative 'loader/dsl'
   require_relative 'loader/step'
   require_relative 'loader/builder'
+  require_relative 'loader/status'
 
   # @since 0.1.0
   include Siege::System::Loader::DSL
@@ -44,7 +45,8 @@ class Siege::System::Loader
     before_stop:,
     after_stop:
   )
-    @lock = Siege::Core::Lock.new
+    @lock   = Siege::Core::Lock.new
+    @status = Siege::System::Loader::Status.new
 
     @init  = init
     @start = start
