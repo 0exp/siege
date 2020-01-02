@@ -143,7 +143,10 @@ module Siege::System::Loader::DSL
       when :start then before_start(&expression)
       when :stop  then before_stop(&expression)
       else
-        raise(Siege::System::ArgumentError, "Incompatible before-callback type #{process_type}")
+        raise(
+          Siege::System::ArgumentError,
+          "Incompatible before-callback type (:#{process_type})"
+        )
       end
     end
 
@@ -159,7 +162,10 @@ module Siege::System::Loader::DSL
       when :start then after_start(&expression)
       when :stop  then after_stop(&expression)
       else
-        raise(Siege::System::ArgumentError, "Incompatible after-callback type #{process_type}")
+        raise(
+          Siege::System::ArgumentError,
+          "Incompatible after-callback type (:#{process_type})"
+        )
       end
     end
 
