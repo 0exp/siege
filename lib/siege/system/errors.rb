@@ -12,4 +12,8 @@ class Siege::System
   # @api public
   # @since 0.1.0
   AmbiguousElementStatusError = Class.new(Error)
+
+  # @api public
+  # @since 0.1.
+  AmbiguousElementDefinitionError = Class.new(Error)
 end

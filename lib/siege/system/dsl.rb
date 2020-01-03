@@ -62,13 +62,16 @@ module Siege::System::DSL
     end
 
     # @param name [String, Symbol]
+    # @option loader [Siege::System::Loader, NilClass]
     # @param loader_definition [Block]
     # @return [void]
     #
     # @api public
     # @since 0.1.0
-    def element(name, &loader_definition)
-      definition_commands << Siege::System::DSL::Commands::Element.new(name, loader_definition)
+    def element(name, loader: nil, &loader_definition)
+      definition_commands << Siege::System::DSL::Commands::Element.new(
+        name, loader, loader_definition
+      )
     end
   end
 end

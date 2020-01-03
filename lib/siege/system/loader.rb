@@ -14,7 +14,7 @@ class Siege::System::Loader
   class << self
     # @return [Siege::System::Loader]
     #
-    # @api private
+    # @api public
     # @since 0.1.0
     def build
       Siege::System::Loader::Builder.build(self)

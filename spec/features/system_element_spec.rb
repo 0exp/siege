@@ -49,16 +49,21 @@ RSpec.describe 'System Element' do
     # NOTE: build simple element
     element = Siege::System::Element.new('logging', loader)
 
+    # NOTE: build another element
     sub_element = Siege::System::Element.new('sub_logging', sub_loader)
   end
 
   specify 'Complex system definition' do
+    stub_const('LoggingLoader', Class.new(Siege::System::Loader))
+
     stub_const('Application', Class.new(Siege::System) do
-      element(:database) do
+      element(:database) do # NOTE: define with anonimous loader definitions
         init { puts 'init!' }
         start { puts 'start!' }
         stop { puts 'stop!' }
       end
+
+      element(:logger, loader: LoggingLoader) # NOTE: define with explicit loader klass
     end)
   end
 end

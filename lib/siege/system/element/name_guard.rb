@@ -14,8 +14,6 @@ module Siege::System::Element::NameGuard
       name.to_s
     end
 
-    private
-
     # @param name [String, Symbol]
     # @return [void]
     #
