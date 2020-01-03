@@ -4,6 +4,7 @@
 # @since 0.1.0
 class Siege::System::Element
   require_relative 'element/name_guard'
+  require_relative 'element/builder'
 
   # @return name [String]
   #
@@ -25,11 +26,18 @@ class Siege::System::Element
   # @since 0.1.0
   def initialize(name, loader)
     @name = Siege::System::Element::NameGuard.indifferently_accesable_name(name)
-    @loader = loader
     @lock = Siege::Core::Lock.new
+    @entities = Siege::Core::Container.new
+    @loader = loader
   end
 
   private
+
+  # @return [Siege::System::Element::Container]
+  #
+  # @api private
+  # @sinec 0.1.0
+  attr_reader :entities
 
   # @param block [Block]
   # @return [Any]

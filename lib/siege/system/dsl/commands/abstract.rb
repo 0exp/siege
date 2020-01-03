@@ -36,7 +36,7 @@ class Siege::System::DSL::Commands::Abstract
   #
   # @api private
   # @since 0.1.0
-  def call; end
+  def call(*) end
 
   # @return [Boolean]
   #

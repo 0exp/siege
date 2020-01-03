@@ -11,4 +11,30 @@ class Siege::System
 
   # @since 0.1.0
   include Siege::System::DSL
+
+  class << self
+    # @return [Siege::System]
+    #
+    # @api public
+    # @since 0.1.0
+    def instantiate
+      Siege::System::Builder.build(self)
+    end
+  end
+
+  # @param elements [Siege::Core::Container<Siege::System::Element>]
+  # @return [void]
+  #
+  # @api private
+  # @since 0.1.0
+  attr_reader :elements
+
+  # @param elements [Siege::Core::Container<Siege::System::Element>]
+  # @return [void]
+  #
+  # @api private
+  # @since 0.1.0
+  def initialize(elements)
+    @elements = elements
+  end
 end

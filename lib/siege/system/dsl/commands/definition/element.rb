@@ -18,6 +18,13 @@ class Siege::System::DSL::Commands::Element < Siege::System::DSL::Commands::Abst
     @loader_definition = loader_definition
   end
 
+  # @param system_elements [Siege::Core::Container]
+  # @return [void]
+  #
+  # @api private
+  # @since 0.1.0
+  def call(system_elements); end
+
   private
 
   # @return [String]
