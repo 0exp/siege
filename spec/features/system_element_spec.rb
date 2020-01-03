@@ -66,6 +66,6 @@ RSpec.describe 'System Element' do
       element(:logger, loader: LoggingLoader) # NOTE: define with explicit loader klass
     end)
 
-    system_instance = Application.instantiate
+    system_instance = Application.build_instance
   end
 end

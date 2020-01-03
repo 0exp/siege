@@ -17,7 +17,7 @@ class Siege::System
     #
     # @api public
     # @since 0.1.0
-    def instantiate
+    def build_instance
       Siege::System::Builder.build(self)
     end
   end
