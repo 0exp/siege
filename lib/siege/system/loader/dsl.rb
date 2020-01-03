@@ -5,6 +5,7 @@
 module Siege::System::Loader::DSL
   require_relative 'dsl/commands'
   require_relative 'dsl/command_set'
+  require_relative 'dsl/inheritance'
 
   class << self
     # @param child_klass [Class<Siege::System::Loader>]
@@ -27,23 +28,40 @@ module Siege::System::Loader::DSL
       child_klass.instance_variable_set(:@on_after_stop,   CommandSet.new)
 
       child_klass.extend(ClassMethods)
+      child_klass.singleton_class.prepend(ClassInheritance)
+    end
+  end
 
-      child_klass.singleton_class.prepend(Module.new do
-        def inherited(child_klass) # rubocop:disable Metrics/AbcSize
-          child_klass.instance_variable_set(:@definition_lock, Siege::Core::Lock.new)
+  # @api private
+  # @since 0.1.0
+  module ClassInheritance
+    # @param child_klass [Class<Siege::System::Loader>]
+    # @return [void]
+    #
+    # @api private
+    # @since 0.1.0
+    def inherited(child_klass) # rubocop:disable Metrics/AbcSize
+      child_klass.instance_variable_set(:@definition_lock, Siege::Core::Lock.new)
 
-          child_klass.instance_variable_set(:@on_init,  on_init.dup)
-          child_klass.instance_variable_set(:@on_start, on_start.dup)
-          child_klass.instance_variable_set(:@on_stop,  on_stop.dup)
+      unless child_klass.instance_variable_defined?(:@on_init)
+        child_klass.instance_variable_set(:@on_init, on_init.dup)
+      end
+      unless child_klass.instance_variable_defined?(:@on_start)
+        child_klass.instance_variable_set(:@on_start, on_start.dup)
+      end
+      unless child_klass.instance_variable_defined?(:@on_stop)
+        child_klass.instance_variable_set(:@on_stop, on_stop.dup)
+      end
 
-          child_klass.instance_variable_set(:@on_before_init,  on_before_init.dup)
-          child_klass.instance_variable_set(:@on_after_init,   on_after_init.dup)
-          child_klass.instance_variable_set(:@on_before_start, on_before_start.dup)
-          child_klass.instance_variable_set(:@on_after_start,  on_after_start.dup)
-          child_klass.instance_variable_set(:@on_before_stop,  on_before_stop.dup)
-          child_klass.instance_variable_set(:@on_after_stop,   on_after_stop.dup)
-        end
-      end)
+      child_klass.instance_variable_set(:@on_before_init,  CommandSet.new)
+      child_klass.instance_variable_set(:@on_after_init,   CommandSet.new)
+      child_klass.instance_variable_set(:@on_before_start, CommandSet.new)
+      child_klass.instance_variable_set(:@on_after_start,  CommandSet.new)
+      child_klass.instance_variable_set(:@on_before_stop,  CommandSet.new)
+      child_klass.instance_variable_set(:@on_after_stop,   CommandSet.new)
+      Siege::System::Loader::DSL::Inheritance.inherit(base: self, child: child_klass)
+      child_klass.singleton_class.prepend(ClassInheritance)
+      super
     end
   end
 

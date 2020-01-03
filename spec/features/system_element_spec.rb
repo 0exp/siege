@@ -37,10 +37,28 @@ RSpec.describe 'System Element' do
       # rubocop:enable  RSpec/EmptyLineAfterHook
     end)
 
+    # NOTE: loader inheritance
+    stub_const('SubLoggingLoder', Class.new(LoggingLoader))
+
     # NOTE: build loader
     loader = LoggingLoader.build
 
+    # NOTE: build inherited loader
+    sub_loader = SubLoggingLoder.build
+
     # NOTE: build simple element
-    element = Siege::System::Element.new(loader)
+    element = Siege::System::Element.new('logging', loader)
+
+    sub_element = Siege::System::Element.new('sub_logging', sub_loader)
+  end
+
+  specify 'Complex system definition' do
+    stub_const('Application', Class.new(Siege::System) do
+      element(:database) do
+        init { puts 'init!' }
+        start { puts 'start!' }
+        stop { puts 'stop!' }
+      end
+    end)
   end
 end
