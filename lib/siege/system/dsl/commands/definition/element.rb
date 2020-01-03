@@ -14,7 +14,7 @@ class Siege::System::DSL::Commands::Element < Siege::System::DSL::Commands::Abst
     prevent_incompatabilities!(name, loader, loader_definition)
 
     @name = Siege::System::Element::NameGuard.indifferently_accesable_name(name)
-    @Loader = loader
+    @loader = loader
     @loader_definition = loader_definition
   end
 
