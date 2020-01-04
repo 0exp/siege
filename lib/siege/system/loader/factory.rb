@@ -2,15 +2,35 @@
 
 # @api private
 # @since 0.1.0
-class Siege::System::Loader::Builder
+class Siege::System::Loader::Factory
   class << self
     # @param loader_klass [Class<Siege::System::Loader>]
-    # @return [void]
+    # @return [Siege::System::Loader]
     #
     # @api private
     # @since 0.1.0
-    def build(loader_klass)
-      new(loader_klass).build
+    def create(loader_klass)
+      new(loader_klass).create
+    end
+
+    # @param definitions [Proc]
+    # @return [Siege::System::Loader]
+    #
+    # @api private
+    # @since 0.1.0
+    def create_from_definitions(definitions)
+      create(create_loader_klass(definitions))
+    end
+
+    private
+
+    # @param definitions [Proc]
+    # @return [Class<Siege::System::Loader>]
+    #
+    # @api private
+    # @since 0.1.0
+    def create_loader_klass(definitions)
+      Class.new(Siege::System::Loader, &definitions)
     end
   end
 
@@ -38,7 +58,7 @@ class Siege::System::Loader::Builder
   #
   # @api private
   # @since 0.1.0
-  def build # rubocop:disable Metrics/AbcSize
+  def create # rubocop:disable Metrics/AbcSize
     on_init(loader_klass.on_init)
     on_start(loader_klass.on_start)
     on_stop(loader_klass.on_stop)
@@ -49,7 +69,7 @@ class Siege::System::Loader::Builder
     on_before_stop(loader_klass.on_before_stop)
     on_after_stop(loader_klass.on_after_stop)
 
-    build_instance!
+    create_instance!
   end
 
   private
@@ -113,7 +133,7 @@ class Siege::System::Loader::Builder
   #
   # @api private
   # @since 0.1.0
-  def build_instance!
+  def create_instance!
     loader_klass.new(
       init: init,
       stop: stop,

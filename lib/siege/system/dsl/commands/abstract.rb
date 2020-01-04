@@ -32,11 +32,13 @@ class Siege::System::DSL::Commands::Abstract
     end
   end
 
+  # @param system_instance [Siege::System]
+  # @param system_elements [Siege::Core::Container]
   # @return [void]
   #
   # @api private
   # @since 0.1.0
-  def call(*) end
+  def call(system_instance, system_elements); end
 
   # @return [Boolean]
   #

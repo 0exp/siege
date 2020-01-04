@@ -6,7 +6,7 @@ class Siege::System
   require_relative 'system/errors'
   require_relative 'system/loader'
   require_relative 'system/element'
-  require_relative 'system/builder'
+  require_relative 'system/factory'
   require_relative 'system/dsl'
 
   # @since 0.1.0
@@ -17,8 +17,8 @@ class Siege::System
     #
     # @api public
     # @since 0.1.0
-    def build_instance
-      Siege::System::Builder.build(self)
+    def create_instance
+      Siege::System::Factory.create(self)
     end
   end
 
@@ -29,7 +29,7 @@ class Siege::System
   # @since 0.1.0
   attr_reader :elements
 
-  # @param elements [Siege::Core::Container<Siege::System::Element>]
+  # @param elements [Siege::Core::Container]
   # @return [void]
   #
   # @api private

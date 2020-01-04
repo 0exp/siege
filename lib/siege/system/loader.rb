@@ -5,7 +5,7 @@
 class Siege::System::Loader
   require_relative 'loader/dsl'
   require_relative 'loader/step'
-  require_relative 'loader/builder'
+  require_relative 'loader/factory'
   require_relative 'loader/status'
 
   # @since 0.1.0
@@ -14,10 +14,10 @@ class Siege::System::Loader
   class << self
     # @return [Siege::System::Loader]
     #
-    # @api public
+    # @api private
     # @since 0.1.0
-    def build
-      Siege::System::Loader::Builder.build(self)
+    def create
+      Siege::System::Loader::Factory.create(self)
     end
   end
 
@@ -45,7 +45,7 @@ class Siege::System::Loader
     before_stop:,
     after_stop:
   )
-    @lock   = Siege::Core::Lock.new
+    @lock = Siege::Core::Lock.new
     @status = Siege::System::Loader::Status.new
 
     @init  = init

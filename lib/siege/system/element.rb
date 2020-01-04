@@ -4,7 +4,7 @@
 # @since 0.1.0
 class Siege::System::Element
   require_relative 'element/name_guard'
-  require_relative 'element/builder'
+  require_relative 'element/factory'
 
   # @return name [String]
   #

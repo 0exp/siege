@@ -41,10 +41,10 @@ RSpec.describe 'System Element' do
     stub_const('SubLoggingLoder', Class.new(LoggingLoader))
 
     # NOTE: build loader
-    loader = LoggingLoader.build
+    loader = LoggingLoader.create
 
     # NOTE: build inherited loader
-    sub_loader = SubLoggingLoder.build
+    sub_loader = SubLoggingLoder.create
 
     # NOTE: build simple element
     element = Siege::System::Element.new('logging', loader)
@@ -66,6 +66,6 @@ RSpec.describe 'System Element' do
       element(:logger, loader: LoggingLoader) # NOTE: define with explicit loader klass
     end)
 
-    system_instance = Application.build_instance
+    system_instance = Application.create_instance
   end
 end

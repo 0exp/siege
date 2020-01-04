@@ -62,7 +62,7 @@ module Siege::System::DSL
     end
 
     # @param name [String, Symbol]
-    # @option loader [Siege::System::Loader, NilClass]
+    # @option loader [Class<Siege::System::Loader>, NilClass]
     # @param loader_definition [Block]
     # @return [void]
     #
