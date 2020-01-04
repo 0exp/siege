@@ -2,7 +2,7 @@
 
 # @api private
 # @since 0.1.0
-class Siege::System::DSL::Commands::Element < Siege::System::DSL::Commands::Abstract
+class Siege::System::DSL::Commands::Definition::Element < Siege::System::DSL::Commands::Abstract
   # @since 0.1.0
   self.inheritable = true
 
