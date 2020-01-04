@@ -43,7 +43,7 @@ class Infrastructure < Siege::System
   end
 end
 
-app_instance = Infrastructure.build_instance # => #<Infrastructure:0x00007f81884d7310>
+app_instance = Infrastructure.create_instance # => #<Infrastructure:0x00007f81884d7310>
 ```
 
 Custom element loader example:
@@ -59,7 +59,7 @@ class Application < Siege::System
   element(:logger, loader: LoggerLoader)
 end
 
-app_instance = Application.build_instance # => #<Application:0x00007f0f0f1d6332>
+app_instance = Application.create_instance # => #<Application:0x00007f0f0f1d6332>
 ```
 
 ---
