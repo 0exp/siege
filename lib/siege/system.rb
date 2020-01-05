@@ -28,14 +28,16 @@ class Siege::System
   #
   # @api private
   # @since 0.1.0
-  attr_reader :elements
+  def initialize(elements)
+    @elements = elements
+  end
+
+  private
 
   # @param elements [Siege::System::ElementRegistry]
   # @return [void]
   #
   # @api private
   # @since 0.1.0
-  def initialize(elements)
-    @elements = elements
-  end
+  attr_reader :elements
 end
