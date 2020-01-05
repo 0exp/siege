@@ -29,7 +29,7 @@ class Siege::System::Factory
   # @since 0.1.0
   def create
     system_instance = system_klass.allocate
-    system_elements = Siege::Core::Container.new
+    system_elements = Siege::System::ElementRegistry.new
 
     link_system_elements(system_instance, system_elements)
     build_definitions(system_instance, system_elements)
@@ -47,7 +47,7 @@ class Siege::System::Factory
   attr_reader :system_klass
 
   # @param system_instance [Siege::System]
-  # @param system_elements [Siege::Core::Container]
+  # @param system_elements [Siege::System::ElementRegistry]
   # @return [void]
   #
   # @api private
@@ -57,7 +57,7 @@ class Siege::System::Factory
   end
 
   # @param system_instance [Siege::System]
-  # @param system_elements [Siege::Core::Container]
+  # @param system_elements [Siege::System::ElementRegistry]
   # @return [void]
   #
   # @api private
@@ -69,7 +69,7 @@ class Siege::System::Factory
   end
 
   # @param system_instance [Siege::System]
-  # @param system_elements [Siege::Core::Container]
+  # @param system_elements [Siege::System::ElementRegistry]
   # @return [void]
   #
   # @api private

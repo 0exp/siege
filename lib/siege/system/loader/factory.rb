@@ -80,19 +80,19 @@ class Siege::System::Loader::Factory
   # @since 0.1.0
   attr_reader :loader_klass
 
-  # @return [Siege::System::Loader::Step]
+  # @return [Siege::System::Loader::Step::Expression]
   #
   # @api private
   # @since 0.1.0
   attr_reader :init
 
-  # @return [Siege::System::Loader::Step]
+  # @return [Siege::System::Loader::Step::Expression]
   #
   # @api private
   # @since 0.1.0
   attr_reader :start
 
-  # @return [Siege::System::Loader::Step]
+  # @return [Siege::System::Loader::Step::Expression]
   #
   # @api private
   # @since 0.1.0
@@ -108,21 +108,25 @@ class Siege::System::Loader::Factory
   # @api private
   # @since 0.1.0
   attr_reader :after_init
+
   # @return [Siege::System::Loader::Step::Callbacks]
   #
   # @api private
   # @since 0.1.0
   attr_reader :before_start
+
   # @return [Siege::System::Loader::Step::Callbacks]
   #
   # @api private
   # @since 0.1.0
   attr_reader :after_start
+
   # @return [Siege::System::Loader::Step::Callbacks]
   #
   # @api private
   # @since 0.1.0
   attr_reader :before_stop
+
   # @return [Siege::System::Loader::Step::Callbacks]
   #
   # @api private
@@ -153,7 +157,7 @@ class Siege::System::Loader::Factory
   # @api private
   # @since 0.1.0
   def on_init(command)
-    @init = Siege::System::Loader::Step::Builder.build(command.expression)
+    @init = Siege::System::Loader::Step::Expression.new(command.expression)
   end
 
   # @param command [Siege::System::Loader::DSL::Commands::Start]
@@ -162,7 +166,7 @@ class Siege::System::Loader::Factory
   # @api private
   # @since 0.1.0
   def on_start(command)
-    @start = Siege::System::Loader::Step::Builder.build(command.expression)
+    @start = Siege::System::Loader::Step::Expression.new(command.expression)
   end
 
   # @param command [Siege::System::Loader::DSL::Commands::Stop]
@@ -171,7 +175,7 @@ class Siege::System::Loader::Factory
   # @api private
   # @since 0.1.0
   def on_stop(command)
-    @stop = Siege::System::Loader::Step::Builder.build(command.expression)
+    @stop = Siege::System::Loader::Step::Expression.new(command.expression)
   end
 
   # @param commands [Siege::System::Loader::DSL::CommandSet]

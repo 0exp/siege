@@ -22,7 +22,7 @@ class Siege::System::DSL::Commands::Definition::Element < Siege::System::DSL::Co
   end
 
   # @param system_instance [Siege::System]
-  # @param system_elements [Siege::Core::Container]
+  # @param system_elements [Siege::System::ElementRegistry]
   # @return [void]
   #
   # @api private

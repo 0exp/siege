@@ -6,6 +6,7 @@ class Siege::System
   require_relative 'system/errors'
   require_relative 'system/loader'
   require_relative 'system/element'
+  require_relative 'system/element_registry'
   require_relative 'system/factory'
   require_relative 'system/dsl'
 
@@ -22,14 +23,14 @@ class Siege::System
     end
   end
 
-  # @param elements [Siege::Core::Container<Siege::System::Element>]
+  # @param elements [Siege::System::ElementRegistry]
   # @return [void]
   #
   # @api private
   # @since 0.1.0
   attr_reader :elements
 
-  # @param elements [Siege::Core::Container]
+  # @param elements [Siege::System::ElementRegistry]
   # @return [void]
   #
   # @api private

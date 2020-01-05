@@ -14,12 +14,22 @@ GEM
       rubocop-rake (= 0.5.0)
       rubocop-rspec (= 1.37.1)
     ast (2.4.0)
+    backport (1.1.2)
+    benchmark (0.1.0)
     coderay (1.1.2)
     diff-lcs (1.3)
     docile (1.3.2)
+    e2mmap (0.1.0)
+    io-console (0.5.4)
+    irb (1.1.0)
+      reline (>= 0.0.1)
     jaro_winkler (1.5.4)
     json (2.3.0)
+    maruku (0.7.3)
     method_source (0.9.2)
+    mini_portile2 (2.4.0)
+    nokogiri (1.10.7)
+      mini_portile2 (~> 2.4.0)
     parallel (1.19.1)
     parser (2.7.0.1)
       ast (~> 2.4.0)
@@ -29,6 +39,10 @@ GEM
     rack (2.0.8)
     rainbow (3.0.0)
     rake (13.0.1)
+    reline (0.1.2)
+      io-console (~> 0.5)
+    reverse_markdown (1.3.0)
+      nokogiri
     rspec (3.9.0)
       rspec-core (~> 3.9.0)
       rspec-expectations (~> 3.9.0)
@@ -67,7 +81,25 @@ GEM
     smart_container (0.1.0)
       smart_engine (~> 0.2)
     smart_engine (0.2.0)
+    solargraph (0.38.1)
+      backport (~> 1.1)
+      benchmark
+      bundler (>= 1.17.2)
+      e2mmap
+      irb (<= 1.1.0)
+      jaro_winkler (~> 1.5)
+      maruku (~> 0.7, >= 0.7.3)
+      nokogiri (~> 1.9, >= 1.9.1)
+      parser (~> 2.3)
+      reverse_markdown (~> 1.0, >= 1.0.5)
+      rubocop (~> 0.52)
+      thor (~> 1.0)
+      tilt (~> 2.0)
+      yard (~> 0.9)
+    thor (1.0.1)
+    tilt (2.0.10)
     unicode-display_width (1.6.0)
+    yard (0.9.22)
 
 PLATFORMS
   ruby
@@ -80,6 +112,7 @@ DEPENDENCIES
   rspec (~> 3.9)
   siege!
   simplecov (~> 0.17)
+  solargraph (~> 0.38)
 
 BUNDLED WITH
    2.1.2

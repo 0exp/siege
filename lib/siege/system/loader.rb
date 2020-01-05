@@ -21,9 +21,9 @@ class Siege::System::Loader
     end
   end
 
-  # @option init [Siege::System::Loader::Step]
-  # @option start [Siege::System::Loader::Step]
-  # @option stop [Siege::System::Loader::Step]
+  # @option init [Siege::System::Loader::Step::Expression]
+  # @option start [Siege::System::Loader::Step::Expression]
+  # @option stop [Siege::System::Loader::Step::Expression]
   # @option before_init [Siege::System::Loader::Step::Callbacks]
   # @option after_init [Siege::System::Loader::Step::Callbacks]
   # @option before_start [Siege::System::Loader::Step::Callbacks]
@@ -45,7 +45,7 @@ class Siege::System::Loader
     before_stop:,
     after_stop:
   )
-    @lock = Siege::Core::Lock.new
+    @lock   = Siege::Core::Lock.new
     @status = Siege::System::Loader::Status.new
 
     @init  = init
@@ -62,19 +62,19 @@ class Siege::System::Loader
 
   private
 
-  # @return [Siege::System::Loader::Step]
+  # @return [Siege::System::Loader::Step::Expression]
   #
   # @api private
   # @since 0.1.0
   attr_reader :init
 
-  # @return [Siege::System::Loader::Step]
+  # @return [Siege::System::Loader::Step::Expression]
   #
   # @api private
   # @since 0.1.0
   attr_reader :start
 
-  # @return [Siege::System::Loader::Step]
+  # @return [Siege::System::Loader::Step::Expression]
   #
   # @api private
   # @since 0.1.0
