@@ -11,7 +11,7 @@ module Siege::System::Element::NameGuard
     # @since 0.1.0
     def indifferently_accesable_name(name)
       prevent_incomparabilities!(name)
-      name.to_s
+      name.to_s.tap(&:freeze)
     end
 
     # @param name [String, Symbol]
