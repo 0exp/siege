@@ -31,8 +31,8 @@ class Siege::System::Factory
     system_instance = system_klass.allocate
     system_elements = Siege::Core::Container.new
 
-    build_definitions(system_instance, system_elements)
     link_system_elements(system_instance, system_elements)
+    build_definitions(system_instance, system_elements)
     build_state(system_instance, system_elements)
 
     system_instance
@@ -52,10 +52,8 @@ class Siege::System::Factory
   #
   # @api private
   # @since 0.1.0
-  def build_definitions(system_instance, system_elements)
-    system_klass.definition_commands.each do |command|
-      command.call(system_instance, system_elements)
-    end
+  def link_system_elements(system_instance, system_elements)
+    system_instance.send(:initialize, system_elements)
   end
 
   # @param system_instance [Siege::System]
@@ -64,8 +62,10 @@ class Siege::System::Factory
   #
   # @api private
   # @since 0.1.0
-  def link_system_elements(system_instance, system_elements)
-    system_instance.send(:initialize, system_elements)
+  def build_definitions(system_instance, system_elements)
+    system_klass.definition_commands.each do |command|
+      command.call(system_instance, system_elements)
+    end
   end
 
   # @param system_instance [Siege::System]
