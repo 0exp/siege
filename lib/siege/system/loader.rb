@@ -60,6 +60,13 @@ class Siege::System::Loader
     @after_stop   = after_stop
   end
 
+  # TODO: 🤔
+  # @return [void]
+  #
+  # @api public
+  # @since 0.1.0
+  def reload!; end
+
   private
 
   # @return [Siege::System::Loader::Step::Expression]
