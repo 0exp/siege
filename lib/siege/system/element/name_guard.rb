@@ -14,13 +14,13 @@ module Siege::System::Element::NameGuard
       name.to_s.tap(&:freeze)
     end
 
-    # @param name [String, Symbol]
+    # @param names [Array<String, Symbol>]
     # @return [void]
     #
     # @api private
     # @since 0.1.0
-    def prevent_incomparabilities!(name)
-      unless name.is_a?(String) || name.is_a?(Symbol)
+    def prevent_incomparabilities!(*names)
+      unless (names.all? { |name| name.is_a?(String) || name.is_a?(Symbol) })
         raise(Siege::System::ArgumentError, <<~ERROR_MESSAGE)
           System Element name should be a type of string or a symbol
         ERROR_MESSAGE
