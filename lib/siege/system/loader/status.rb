@@ -33,12 +33,6 @@ class Siege::System::Loader::Status
   # @since 0.1.0
   INITIAL_STATUS = NON_INITIALIZED
 
-  # @return [Symbol]
-  #
-  # @api private
-  # @since 0.1.0
-  attr_reader :current_status
-
   # @return [void]
   #
   # @api private
@@ -46,6 +40,14 @@ class Siege::System::Loader::Status
   def initialize
     @lock = Siege::Core::Lock.new
     @current_status = INITIAL_STATUS
+  end
+
+  # @return [Symbol]
+  #
+  # @api private
+  # @since 0.1.0
+  def identifier
+    @current_status
   end
 
   # @return [Boolean]
@@ -126,6 +128,12 @@ class Siege::System::Loader::Status
   end
 
   private
+
+  # @return [Symbol]
+  #
+  # @api private
+  # @since 0.1.0
+  attr_reader :current_status
 
   # @option correct_initials [Array<Symbol>]
   # @option to [Symbol]
