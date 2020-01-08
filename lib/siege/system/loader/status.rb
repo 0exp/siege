@@ -62,7 +62,11 @@ class Siege::System::Loader::Status
   # @since 0.1.0
   def init!
     thread_safe do
-      intercept_ambiguous_status_transition!(correct_initials: [NON_INITIALIZED], to: INITIALIZED)
+      intercept_ambiguous_status_transition!(
+        correct_initials: [NON_INITIALIZED, INITIALIZED],
+        to: INITIALIZED
+      )
+
       @current_status = INITIALIZED
     end
   end
@@ -81,7 +85,11 @@ class Siege::System::Loader::Status
   # @since 0.1.0
   def start!
     thread_safe do
-      intercept_ambiguous_status_transition!(correct_initials: [INITIALIZED, STOPPED], to: STARTED)
+      intercept_ambiguous_status_transition!(
+        correct_initials: [INITIALIZED, STOPPED, STARTED],
+        to: STARTED
+      )
+
       @current_status = STARTED
     end
   end
@@ -100,7 +108,11 @@ class Siege::System::Loader::Status
   # @since 0.1.0
   def stop!
     thread_safe do
-      intercept_ambiguous_status_transition!(correct_initials: [STARTED], to: STOPPED)
+      intercept_ambiguous_status_transition!(
+        correct_initials: [STARTED, STOPPED],
+        to: STOPPED
+      )
+
       @current_status = STOPPED
     end
   end
