@@ -69,4 +69,22 @@ RSpec.describe 'System Element' do
     # NOTE: create instance
     system_instance = Application.create_instance
   end
+
+  specify 'init/star/stop and status' do
+    stub_const('LoggingLoader', Class.new(Siege::System::Loader))
+
+    stub_const('Application', Class.new(Siege::System) do
+      element(:database) do # NOTE: define with anonimous loader definitions
+        init { puts 'init!' }
+        start { puts 'start!' }
+        stop { puts 'stop!' }
+      end
+
+      element(:logger, loader: LoggingLoader) # NOTE: define with explicit loader klass
+    end)
+
+    system_instance = Application.create_instance
+
+    system_instance.init!
+  end
 end

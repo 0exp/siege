@@ -49,10 +49,36 @@ class Siege::System
     orchestrator.initialize_elements(element_names)
   end
 
+  # @param element_names [Array<String, Symbol>]
+  # @return [void]
+  #
+  # @api public
+  # @since 0.1.0
+  def start!(*element_names)
+    orchestrator.start_elements(element_names)
+  end
+
+  # @param element_names [Array<String, Symbol>]
+  # @return [void]
+  #
+  # @api public
+  # @since 0.1.0
+  def stop!(*element_names)
+    orchestrator.stop_elements(element_names)
+  end
+
+  # @param element_names [Array<String, Symbol>]
+  # @return [void]
+  #
+  # @api public
+  # @since 0.1.0
+  def reload!(*element_names)
+    orchestrator.reload_elements(element_names)
+  end
+
   private
 
-  # @param elements [Siege::System::Orchestrator]
-  # @return [void]
+  # @return [Siege::System::Orchestrator]
   #
   # @api private
   # @since 0.1.0

@@ -32,6 +32,30 @@ class Siege::System::Element
     @loader   = loader
   end
 
+  # @return [void]
+  #
+  # @api private
+  # @since 0.1.0
+  def init!; end
+
+  # @return [void]
+  #
+  # @api private
+  # @since 0.1.0
+  def start!; end
+
+  # @return [void]
+  #
+  # @api private
+  # @since 0.1.0
+  def end!; end
+
+  # @return [void]
+  #
+  # @api private
+  # @since 0.1.0
+  def reload!; end
+
   private
 
   # @return [Siege::System::Element::EntityRegistry]
