@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe 'System Element' do
+RSpec.describe 'System functionality' do
   specify 'Raw creation of a simple system element' do
     # NOTE: create loader
     stub_const('LoggingLoader', Class.new(Siege::System::Loader) do
@@ -76,8 +76,8 @@ RSpec.describe 'System Element' do
     stub_const('Application', Class.new(Siege::System) do
       element(:database) do # NOTE: define with anonimous loader definitions
         init { puts 'init!' }
-        start { puts 'start!' }
-        stop { puts 'stop!' }
+        start { puts 'started!!!!' }
+        stop { puts 'stopped!!!!' }
       end
 
       element(:logger, loader: LoggingLoader) # NOTE: define with explicit loader klass
@@ -86,5 +86,10 @@ RSpec.describe 'System Element' do
     system_instance = Application.create_instance
 
     system_instance.init!
+    puts "---\n#{system_instance.status}\----"
+    system_instance.start!
+    puts "---\n#{system_instance.status}\----"
+    system_instance.stop!
+    puts "---\n#{system_instance.status}\----"
   end
 end

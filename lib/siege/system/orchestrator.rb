@@ -8,6 +8,7 @@ class Siege::System::Orchestrator
   require_relative 'orchestrator/starter'
   require_relative 'orchestrator/stopper'
   require_relative 'orchestrator/reloader'
+  require_relative 'orchestrator/status_list'
 
   # @rparam system [Siege::System]
   #
@@ -19,6 +20,15 @@ class Siege::System::Orchestrator
     @starter     = Siege::System::Orchestrator::Starter.new(system)
     @stopper     = Siege::System::Orchestrator::Stopper.new(system)
     @reloader    = Siege::System::Orchestrator::Reloader.new(system)
+    @status_list = Siege::System::Orchestrator::StatusList.new(system)
+  end
+
+  # @return [Hash<String,Symbol>]
+  #
+  # @api private
+  # @since 0.1.0
+  def element_statuses
+    thread_safe { status_list.calculate }
   end
 
   # @param element_names [Array<String, Symbol>]
@@ -77,6 +87,12 @@ class Siege::System::Orchestrator
   # @api private
   # @since 0.1.0
   attr_reader :reloader
+
+  # @return [Siege::System::Orchestrator::StatusList]
+  #
+  # @api private
+  # @since 0.1.0
+  attr_reader :status_list
 
   # @param block [Block]
   # @return [Any]

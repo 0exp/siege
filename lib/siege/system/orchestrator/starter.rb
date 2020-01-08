@@ -8,7 +8,7 @@ class Siege::System::Orchestrator::Starter < Siege::System::Orchestrator::Elemen
   #
   # @api private
   # @since 0.1.0
-  def start(*element_names)
+  def start(element_names)
     element_identifiers = prepare_element_identifiers(element_names)
     element_identifiers.empty? ? start_all_elements : start_elements(element_identifiers)
   end

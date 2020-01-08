@@ -32,7 +32,7 @@ class Siege::System::Orchestrator::ElementActivity
     element_names.map do |element_name|
       Siege::System::Element::NameGuard.indifferently_accesable_name(element_name)
     end.tap do |element_identifiers|
-      nonexistent_elements = element_identifiers.select do |element_identifier|
+      nonexistent_elements = element_identifiers.reject do |element_identifier|
         system.elements.key?(element_identifier)
       end
 

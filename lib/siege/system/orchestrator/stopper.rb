@@ -8,7 +8,7 @@ class Siege::System::Orchestrator::Stopper < Siege::System::Orchestrator::Elemen
   #
   # @api private
   # @since 0.1.0
-  def stop(*element_names)
+  def stop(element_names)
     element_identifiers = prepare_element_identifiers(element_names)
     element_identifiers.empty? ? stop_all_elements : stop_elements(element_identifiers)
   end

@@ -58,18 +58,22 @@ class Siege::System::Loader::Status
     thread_safe { current_status == NON_INITIALIZED }
   end
 
+  # @param expression [Proc]
   # @return [Symbol]
   #
   # @api private
   # @since 0.1.0
-  def init!
+  def transit_to_init(&expression)
     thread_safe do
       intercept_ambiguous_status_transition!(
         correct_initials: [NON_INITIALIZED, INITIALIZED],
         to: INITIALIZED
       )
 
-      @current_status = INITIALIZED
+      transactional(@current_status) do
+        yield
+        @current_status = INITIALIZED
+      end
     end
   end
 
@@ -81,18 +85,22 @@ class Siege::System::Loader::Status
     thread_safe { current_status == INITIALIZED }
   end
 
+  # @param expression [Block]
   # @return [Symbol]
   #
   # @api private
   # @since 0.1.0
-  def start!
+  def transit_to_start(&expression)
     thread_safe do
       intercept_ambiguous_status_transition!(
         correct_initials: [INITIALIZED, STOPPED, STARTED],
         to: STARTED
       )
 
-      @current_status = STARTED
+      transactional(@current_status) do
+        yield
+        @current_status = STARTED
+      end
     end
   end
 
@@ -108,14 +116,17 @@ class Siege::System::Loader::Status
   #
   # @api private
   # @since 0.1.0
-  def stop!
+  def transit_to_stop(&expression)
     thread_safe do
       intercept_ambiguous_status_transition!(
         correct_initials: [STARTED, STOPPED],
         to: STOPPED
       )
 
-      @current_status = STOPPED
+      transactional(@current_status) do
+        yield
+        @current_status = STOPPED
+      end
     end
   end
 
@@ -134,6 +145,19 @@ class Siege::System::Loader::Status
   # @api private
   # @since 0.1.0
   attr_reader :current_status
+
+  # @param initial_status [Symbol]
+  # @param transition [Block]
+  # @return [void]
+  #
+  # @api private
+  # @since 0.1.0
+  def transactional(initial_status, &transition)
+    yield
+  rescue => error
+    @current_status = initial_status
+    raise(error)
+  end
 
   # @option correct_initials [Array<Symbol>]
   # @option to [Symbol]

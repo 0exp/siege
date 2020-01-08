@@ -40,6 +40,14 @@ class Siege::System
     @orchestrator = Siege::System::Orchestrator.new(self)
   end
 
+  # @return [Hash<String,Symbol>]
+  #
+  # @api public
+  # @since 0.1.0
+  def status
+    orchestrator.element_statuses
+  end
+
   # @param element_names [Array<String, Symbol>]
   # @return [void]
   #

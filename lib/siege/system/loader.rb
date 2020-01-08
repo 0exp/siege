@@ -45,7 +45,7 @@ class Siege::System::Loader
     before_stop:,
     after_stop:
   )
-    @lock   = Siege::Core::Lock.new
+    @lock = Siege::Core::Lock.new
     @status = Siege::System::Loader::Status.new
 
     @init  = init
@@ -60,7 +60,60 @@ class Siege::System::Loader
     @after_stop   = after_stop
   end
 
+  # @return [Symbol]
+  #
+  # @api private
+  # @since 0.1.0
+  def status_identifier
+    status.identifier
+  end
+
+  # @return [void]
+  #
+  # @api private
+  # @since 0.1.0
+  def init!
+    thread_safe do
+      next if status.initialized?
+      before_init.call
+      status.transit_to_init { init.call }
+      after_init.call
+    end
+  end
+
+  # @return [void]
+  #
+  # @api private
+  # @since 0.1.0
+  def start!
+    thread_safe do
+      next if status.started?
+      before_start.call
+      status.transit_to_start { start.call }
+      after_start.call
+    end
+  end
+
+  # @return [void]
+  #
+  # @api private
+  # @since 0.1.0
+  def stop!
+    thread_safe do
+      next if status.stopped?
+      before_stop.call
+      status.transit_to_stop { stop.call }
+      after_stop.call
+    end
+  end
+
   private
+
+  # @return [Siege::System::Loader::Status]
+  #
+  # @api private
+  # @since 0.1.0
+  attr_reader :status
 
   # @return [Siege::System::Loader::Step::Expression]
   #

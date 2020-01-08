@@ -32,29 +32,37 @@ class Siege::System::Element
     @loader   = loader
   end
 
-  # @return [void]
+  # @return [Symbol]
   #
   # @api private
   # @since 0.1.0
-  def init!; end
+  def status
+    thread_safe { loader.status_identifier }
+  end
 
   # @return [void]
   #
   # @api private
   # @since 0.1.0
-  def start!; end
+  def init!
+    thread_safe { loader.init! }
+  end
 
   # @return [void]
   #
   # @api private
   # @since 0.1.0
-  def end!; end
+  def start!
+    thread_safe { loader.start! }
+  end
 
   # @return [void]
   #
   # @api private
   # @since 0.1.0
-  def reload!; end
+  def stop!
+    thread_safe { loader.stop! }
+  end
 
   private
 
