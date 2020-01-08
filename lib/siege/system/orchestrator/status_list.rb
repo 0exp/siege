@@ -12,7 +12,7 @@ class Siege::System::Orchestrator::StatusList
     @system = system
   end
 
-  # @return [Hash<String,Symbol]
+  # @return [Hash<String,Symbol>]
   #
   # @api private
   # @since 0.1.0

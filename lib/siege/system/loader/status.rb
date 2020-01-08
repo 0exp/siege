@@ -58,7 +58,7 @@ class Siege::System::Loader::Status
     thread_safe { current_status == NON_INITIALIZED }
   end
 
-  # @param expression [Proc]
+  # @param expression [Block]
   # @return [Symbol]
   #
   # @api private
@@ -112,6 +112,7 @@ class Siege::System::Loader::Status
     thread_safe { current_status == STARTED }
   end
 
+  # @param expression [Block]
   # @return [Symbol]
   #
   # @api private
