@@ -3,7 +3,6 @@
 # @api private
 # @since 0.1.0
 class Siege::System::Loader::Step::Callbacks
-  # @param callback [Block]
   # @return [void]
   #
   # @api private
