@@ -28,7 +28,12 @@ class Siege::System::DSL::Commands::Definition::Element < Siege::System::DSL::Co
   # @api private
   # @since 0.1.0
   def call(system_instance, system_elements)
-    element = Siege::System::Element::Factory.create(element_name, loader_klass, loader_definition)
+    element = Siege::System::Element::Factory.create(
+      element_name,
+      loader_klass,
+      loader_definition,
+      system_instance
+    )
     system_elements.register(element_name) { element }
   end
 

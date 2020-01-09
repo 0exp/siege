@@ -12,16 +12,7 @@ class Siege::System::Loader
   # @since 0.1.0
   include Siege::System::Loader::DSL
 
-  class << self
-    # @return [Siege::System::Loader]
-    #
-    # @api private
-    # @since 0.1.0
-    def create
-      Siege::System::Loader::Factory.create(self)
-    end
-  end
-
+  # @param invocation_context [Siege::System::Loader::InvocationContext]
   # @option init [Siege::System::Loader::Step::Expression]
   # @option start [Siege::System::Loader::Step::Expression]
   # @option stop [Siege::System::Loader::Step::Expression]
@@ -36,6 +27,7 @@ class Siege::System::Loader
   # @api private
   # @since 0.1.0
   def initialize(
+    invocation_context,
     init:,
     start:,
     stop:,
@@ -48,6 +40,8 @@ class Siege::System::Loader
   )
     @lock = Siege::Core::Lock.new
     @status = Siege::System::Loader::Status.new
+
+    @invocation_context = invocation_context
 
     @init  = init
     @start = start
@@ -76,9 +70,9 @@ class Siege::System::Loader
   def init!
     thread_safe do
       next if status.initialized?
-      before_init.call
-      status.transit_to_init { init.call }
-      after_init.call
+      before_init.call # TODO: run_in_context too
+      status.transit_to_init { run_in_context(init) }
+      after_init.call # TODO: run_in_context too
     end
   end
 
@@ -89,9 +83,9 @@ class Siege::System::Loader
   def start!
     thread_safe do
       next if status.started?
-      before_start.call
-      status.transit_to_start { start.call }
-      after_start.call
+      before_start.call # TODO: run_in_context too
+      status.transit_to_start { run_in_context(start) }
+      after_start.call # TODO: run_in_context too
     end
   end
 
@@ -102,13 +96,19 @@ class Siege::System::Loader
   def stop!
     thread_safe do
       next if status.stopped?
-      before_stop.call
-      status.transit_to_stop { stop.call }
-      after_stop.call
+      before_stop.call # TODO: run_in_context too
+      status.transit_to_stop { run_in_context(stop) }
+      after_stop.call # TODO: run_in_context too
     end
   end
 
   private
+
+  # @return [Siege::System::Loader::InvocationContext]
+  #
+  # @api private
+  # @since 0.1.0
+  attr_reader :invocation_context
 
   # @return [Siege::System::Loader::Status]
   #
@@ -169,6 +169,15 @@ class Siege::System::Loader
   # @api private
   # @since 0.1.0
   attr_reader :after_stop
+
+  # @param expression [Siege::System::Loader::Step::Expression]
+  # @return [Any]
+  #
+  # @api private
+  # @since 0.1.0
+  def run_in_context(expression)
+    invocation_context.____instance_eval____(&expression)
+  end
 
   # @param block [Block]
   # @return [Any]

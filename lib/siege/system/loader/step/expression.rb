@@ -20,6 +20,14 @@ class Siege::System::Loader::Step::Expression
     process&.call
   end
 
+  # @return [Proc]
+  #
+  # @api private
+  # @since 0.1.0
+  def to_proc
+    process || (proc {})
+  end
+
   private
 
   # @return [Proc, NilClass]

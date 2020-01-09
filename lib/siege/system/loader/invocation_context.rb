@@ -34,9 +34,12 @@ class Siege::System::Loader::InvocationContext
   def register(entity_name, entity_value)
     entity_name = Siege::System::Element::NameGuard.indifferently_accesable_name(entity_name)
     ____element____[entity_name] = entity_value
-    instrument_shadowed_methods(access_method)
+    instrument_shadowed_methods(entity_name)
     define_singleton_method(entity_name) { ____element____[entity_name] }
   end
+
+  # @since 0.1.0
+  alias_method :____instance_eval____, :instance_eval
 
   private
 

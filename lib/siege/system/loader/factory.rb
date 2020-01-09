@@ -2,24 +2,26 @@
 
 # @api private
 # @since 0.1.0
-class Siege::System::Loader::Factory
+class Siege::System::Loader::Factory # rubocop:disable Metrics/ClassLength
   class << self
     # @param loader_klass [Class<Siege::System::Loader>]
+    # @param invocation_context [Siege::System::Loader::InvocationContext]
     # @return [Siege::System::Loader]
     #
     # @api private
     # @since 0.1.0
-    def create(loader_klass)
-      new(loader_klass).create
+    def create(loader_klass, invocation_context)
+      new(loader_klass, invocation_context).create
     end
 
     # @param definitions [Proc]
+    # @param invocation_context [Siege::System::Loader::InvocationContext]
     # @return [Siege::System::Loader]
     #
     # @api private
     # @since 0.1.0
-    def create_from_definitions(definitions)
-      create(create_loader_klass(definitions))
+    def create_from_definitions(definitions, invocation_context)
+      create(create_loader_klass(definitions), invocation_context)
     end
 
     private
@@ -35,12 +37,14 @@ class Siege::System::Loader::Factory
   end
 
   # @param loader_klass [Class<Siege::System::Loader>]
+  # @param invocation_context [Siege::System::Loader::InvocationContext]
   # @return [void]
   #
   # @api private
   # @since 0.1.0
-  def initialize(loader_klass)
+  def initialize(loader_klass, invocation_context)
     @loader_klass = loader_klass
+    @invocation_context = invocation_context
 
     @init  = nil
     @start = nil
@@ -79,6 +83,12 @@ class Siege::System::Loader::Factory
   # @api private
   # @since 0.1.0
   attr_reader :loader_klass
+
+  # @return [Siege::System::Loader::InvocationContext]
+  #
+  # @api private
+  # @since 0.1.0
+  attr_reader :invocation_context
 
   # @return [Siege::System::Loader::Step::Expression]
   #
@@ -139,6 +149,7 @@ class Siege::System::Loader::Factory
   # @since 0.1.0
   def create_instance!
     loader_klass.new(
+      invocation_context,
       init: init,
       stop: stop,
       start: start,

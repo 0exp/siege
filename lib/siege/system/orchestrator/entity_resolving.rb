@@ -64,7 +64,7 @@ class Siege::System::Orchestrator::EntityResolving
   # @api private
   # @since 0.1.0
   def resolve_element_entity(element, entity_path)
-    element.entities[entity_path]
+    element[entity_path]
   rescue SmartCore::Container::ResolvingError
     raise(Siege::System::SystemElementEntityNotFoundError.new(missing_entities: [entity_path]))
   end

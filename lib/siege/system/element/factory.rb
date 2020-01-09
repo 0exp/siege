@@ -7,26 +7,29 @@ class Siege::System::Element::Factory
     # @param element_name [String, Symbol]
     # @param loader_klass [Class<Siege::System::Loader>, NilClass]
     # @param loader_definition [Proc, NilClass]
+    # @param system_instance [Siege::System]
     # @return [Siege::System::Element]
     #
     # @api private
     # @since 0.1.0
-    def create(element_name, loader_klass, loader_definition)
-      new(element_name, loader_klass, loader_definition).create
+    def create(element_name, loader_klass, loader_definition, system_instance)
+      new(element_name, loader_klass, loader_definition, system_instance).create
     end
   end
 
   # @param element_name [String, Symbol]
   # @param loader_klass [Class<Siege::System::Loader>, NilClass]
   # @param loader_definition [Proc, NilClass]
+  # @param system_instance [Siege::System]
   # @return [void]
   #
   # @api private
   # @since 0.1.0
-  def initialize(element_name, loader_klass, loader_definition)
-    @element_name = element_name
-    @loader_klass = loader_klass
+  def initialize(element_name, loader_klass, loader_definition, system_instance)
+    @element_name      = element_name
+    @loader_klass      = loader_klass
     @loader_definition = loader_definition
+    @system_instance   = system_instance
   end
 
   # @return [Siege::System::Element]
@@ -34,7 +37,10 @@ class Siege::System::Element::Factory
   # @api private
   # @since 0.1.0
   def create
-    create_element(create_loader)
+    element_allocation = allocate_element
+    invocation_context = create_invocation_context(element_allocation)
+    loader_instance = create_loader(invocation_context)
+    initialize_element_instance(element_allocation, loader_instance)
   end
 
   private
@@ -56,25 +62,51 @@ class Siege::System::Element::Factory
   # @since 0.1.0
   attr_reader :loader_definition
 
+  # @return [Siege::System]
+  #
+  # @api private
+  # @since 0.1.0
+  attr_reader :system_instance
+
+  # @return allocation [Siege::System::Element]
+  #
+  # @api private
+  # @since 0.1.0
+  def allocate_element
+    Siege::System::Element.allocate
+  end
+
+  # @param element_allocation [Siege::System::Element]
+  # @return [Siege::System::Loader::InvocationContext]
+  #
+  # @api private
+  # @since 0.1.0
+  def create_invocation_context(element_allocation)
+    Siege::System::Loader::InvocationContext.new(system_instance, element_allocation)
+  end
+
+  # @param invocation_context [Siege::System::Loader::InvocationContext]
   # @return [Siege::System::Loader]
   #
   # @api private
   # @since 0.1.0
-  def create_loader
+  def create_loader(invocation_context)
     case
     when loader_klass
-      Siege::System::Loader::Factory.create(loader_klass)
+      Siege::System::Loader::Factory.create(loader_klass, invocation_context)
     when loader_definition
-      Siege::System::Loader::Factory.create_from_definitions(loader_definition)
+      Siege::System::Loader::Factory.create_from_definitions(loader_definition, invocation_context)
     end
   end
 
+  # @param element_allocation [Siege::System::Element]
   # @param loader [Siege::System::Loader]
-  # @return [Siege::System::Element]
+  # @return [void]
   #
   # @pai private
   # @since 0.1.0
-  def create_element(loader)
-    Siege::System::Element.new(element_name, loader)
+  def initialize_element_instance(element_allocation, loader)
+    element_allocation.send(:initialize, element_name, loader)
+    element_allocation
   end
 end

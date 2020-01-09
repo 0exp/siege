@@ -39,18 +39,6 @@ RSpec.describe 'System functionality' do
 
     # NOTE: loader inheritance
     stub_const('SubLoggingLoder', Class.new(LoggingLoader))
-
-    # NOTE: build loader
-    loader = LoggingLoader.create
-
-    # NOTE: build inherited loader
-    sub_loader = SubLoggingLoder.create
-
-    # NOTE: build simple element
-    element = Siege::System::Element.new('logging', loader)
-
-    # NOTE: build another element
-    sub_element = Siege::System::Element.new('sub_logging', sub_loader)
   end
 
   specify 'Complex system definition' do
@@ -75,9 +63,9 @@ RSpec.describe 'System functionality' do
 
     stub_const('Application', Class.new(Siege::System) do
       element(:database) do # NOTE: define with anonimous loader definitions
-        init { puts 'init!' }
-        start { puts 'started!!!!' }
-        stop { puts 'stopped!!!!' }
+        init { register(:db, 'DataBaseClient') }
+        start { puts db }
+        stop { puts db }
       end
 
       element(:logger, loader: LoggingLoader) # NOTE: define with explicit loader klass
@@ -91,5 +79,11 @@ RSpec.describe 'System functionality' do
     puts "---\n#{system_instance.status}\----"
     system_instance.stop!
     puts "---\n#{system_instance.status}\----"
+
+    # registered entity
+    system_instance['database.db']
+
+    # registered_entities
+
   end
 end
