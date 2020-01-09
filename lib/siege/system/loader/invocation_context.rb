@@ -17,7 +17,7 @@ class Siege::System::Loader::InvocationContext
   #
   # @api private
   # @since 0.1.0
-  def import(element_entity_path, as: nil)
+  def use(element_entity_path, as: nil)
     Siege::System::Element::NameGuard.path_parts_for(element_entity_path) in { entity: entity }
     ____system____[entity] # resolving validation emulation
     access_method = as.nil? ? entity : as
