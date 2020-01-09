@@ -26,6 +26,26 @@ class Siege::System::Element
     @loader   = loader
   end
 
+  # @param entity_name [String, Symbol]
+  # @param entity_value [Any]
+  #
+  # @api private
+  # @since 0.1.0
+  def register_entity(entity_name, entity_value)
+    entities.register(entity_name) { entity_value }
+  end
+  alias_method :[]=, :register_entity
+
+  # @param entity_name [String, Symbol]
+  # @return [Any]
+  #
+  # @api private
+  # @since 0.1.0
+  def get_entity(entity_name)
+    entities[entity_name]
+  end
+  alias_method :[], :get_entity
+
   # @return [Symbol]
   #
   # @api private

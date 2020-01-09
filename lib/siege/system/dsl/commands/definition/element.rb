@@ -60,7 +60,7 @@ class Siege::System::DSL::Commands::Definition::Element < Siege::System::DSL::Co
   # @api private
   # @since 0.1.0
   def prevent_incompatabilities!(element_name, loader, loader_definition)
-    Siege::System::Element::NameGuard.prevent_incomparabilities!(element_name)
+    Siege::System::Element::NameGuard.prevent_name_incomparabilities!(element_name)
 
     raise(
       Siege::System::ArgumentError,

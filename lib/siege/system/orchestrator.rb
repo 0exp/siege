@@ -9,18 +9,29 @@ class Siege::System::Orchestrator
   require_relative 'orchestrator/stopper'
   require_relative 'orchestrator/reloader'
   require_relative 'orchestrator/status_list'
+  require_relative 'orchestrator/entity_resolving'
 
   # @rparam system [Siege::System]
   #
   # @api private
   # @since 0.1.0
   def initialize(system)
-    @lock        = Siege::Core::Lock.new
-    @initializer = Siege::System::Orchestrator::Initializer.new(system)
-    @starter     = Siege::System::Orchestrator::Starter.new(system)
-    @stopper     = Siege::System::Orchestrator::Stopper.new(system)
-    @reloader    = Siege::System::Orchestrator::Reloader.new(system)
-    @status_list = Siege::System::Orchestrator::StatusList.new(system)
+    @lock             = Siege::Core::Lock.new
+    @initializer      = Siege::System::Orchestrator::Initializer.new(system)
+    @starter          = Siege::System::Orchestrator::Starter.new(system)
+    @stopper          = Siege::System::Orchestrator::Stopper.new(system)
+    @reloader         = Siege::System::Orchestrator::Reloader.new(system)
+    @status_list      = Siege::System::Orchestrator::StatusList.new(system)
+    @entity_resolving = Siege::System::Orchestrator::EntityResolving.new(system)
+  end
+
+  # @param element_entity_path [String]
+  # @return [Any]
+  #
+  # @api private
+  # @since 0.1.0
+  def resolve_element_entity(element_entity_path)
+    thread_safe { entity_resolving.resolve(element_entity_path) }
   end
 
   # @return [Hash<String,Symbol>]
@@ -93,6 +104,12 @@ class Siege::System::Orchestrator
   # @api private
   # @since 0.1.0
   attr_reader :status_list
+
+  # @return [Siege::System::Orchestrator::EntityResolving]
+  #
+  # @api private
+  # @since 0.1.0
+  attr_reader :entity_resolving
 
   # @param block [Block]
   # @return [Any]

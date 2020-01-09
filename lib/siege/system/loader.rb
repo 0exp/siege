@@ -7,6 +7,7 @@ class Siege::System::Loader
   require_relative 'loader/step'
   require_relative 'loader/factory'
   require_relative 'loader/status'
+  require_relative 'loader/invocation_context'
 
   # @since 0.1.0
   include Siege::System::Loader::DSL

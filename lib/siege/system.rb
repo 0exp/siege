@@ -19,7 +19,7 @@ class Siege::System
     #
     # @api public
     # @since 0.1.0
-    def create_instance
+    def build
       Siege::System::Factory.create(self)
     end
   end
@@ -38,6 +38,24 @@ class Siege::System
   def initialize(elements)
     @elements = elements
     @orchestrator = Siege::System::Orchestrator.new(self)
+  end
+
+  # @param element_entity_path [String]
+  # @return [Any]
+  #
+  # @api public
+  # @since 0.1.0
+  def resolve(element_entity_path)
+    orchestrator.resolve_element_entity(element_entity_path)
+  end
+  alias_method :[], :resolve
+
+  # @return [Hash<String,Any>]
+  #
+  # @api public
+  # @sinc 0.1.0
+  def entities
+    # TODO: realize
   end
 
   # @return [Hash<String,Symbol>]

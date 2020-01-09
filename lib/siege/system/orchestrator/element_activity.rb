@@ -37,10 +37,8 @@ class Siege::System::Orchestrator::ElementActivity
       end
 
       raise(
-        Siege::System::SystemElementNotFoundError,
-        "Some chosen system elements does not exist " \
-        "(nonexistent elements: #{nonexistent_elements.join(', ')})"
-      ) if nonexistent_elements.any?
+        Siege::System::SystemElementNotFoundError.new(missing_elements: nonexistent_elements)
+      ) unless nonexistent_elements.empty?
     end
   end
 end

@@ -43,7 +43,7 @@ class Infrastructure < Siege::System
   end
 end
 
-app_instance = Infrastructure.create_instance # => #<Infrastructure:0x00007f81884d7310>
+app_instance = Infrastructure.build # => #<Infrastructure:0x00007f81884d7310>
 ```
 
 Custom element loader example:
@@ -59,7 +59,57 @@ class Application < Siege::System
   element(:logger, loader: LoggerLoader)
 end
 
-app_instance = Application.create_instance # => #<Application:0x00007f0f0f1d6332>
+app_instance = Application.build # => #<Application:0x00007f0f0f1d6332>
+```
+
+Resolve registered element entities (you should provide both element name and entity name):
+
+```ruby
+class Infrastructre < Siege::System
+  element(:database) do
+    init { register(:db) { DBClient.new } }
+  end
+
+  element(:logging) do
+    start { register(:logger) { Logger.new(STDOUT) } }
+  end
+end
+
+infrastructure = Infrastructre.build
+
+infrastructure.init!
+infrastructure['database.db'] # => #<DBClient:0x00007f1f991d7701>
+
+infrastructure.start!(:logger)
+infrastructure['logging.logger'] # => #<Logger:0x00007f1f991d7702>
+
+# All registered entities:
+infrastructure.entities
+# =>
+{
+  'database.db' => #<DBClient:0x00007f1f991d7701>,
+  'logging.logger' => #<Logger:0x00007f1f991d7702>
+}
+```
+
+System's Initialization/Starting/Stopping processes:
+
+```ruby
+app_instance.init! # initialize all elements
+app_instance.init!(:logger) # initialize logger element
+
+app_instance.status
+# =>
+{ 'logger' => :initialized, 'database' => :non_initialized }
+
+app_instance.start! # start all elements
+app_instance.start!(:logger, :database) # start only the logger element
+
+app_instance.status
+# =>
+{ 'logger' => :started, 'database' => :started }
+
+# and stop! / stop!(*element_names) respectively
 ```
 
 ---

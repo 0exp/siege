@@ -67,7 +67,7 @@ RSpec.describe 'System functionality' do
     end)
 
     # NOTE: create instance
-    system_instance = Application.create_instance
+    system_instance = Application.build
   end
 
   specify 'init/star/stop and status' do
@@ -83,7 +83,7 @@ RSpec.describe 'System functionality' do
       element(:logger, loader: LoggingLoader) # NOTE: define with explicit loader klass
     end)
 
-    system_instance = Application.create_instance
+    system_instance = Application.build
 
     system_instance.init!
     puts "---\n#{system_instance.status}\----"
