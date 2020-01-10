@@ -55,7 +55,7 @@ class Siege::System
   # @api public
   # @sinc 0.1.0
   def entities
-    # TODO: realize
+    orchestrator.resolve_system_entities
   end
 
   # @return [Hash<String,Symbol>]
@@ -71,7 +71,7 @@ class Siege::System
   #
   # @api public
   # @since 0.1.0
-  def init!(*element_names)
+  def init(*element_names)
     orchestrator.initialize_elements(element_names)
   end
 
@@ -80,7 +80,7 @@ class Siege::System
   #
   # @api public
   # @since 0.1.0
-  def start!(*element_names)
+  def start(*element_names)
     orchestrator.start_elements(element_names)
   end
 
@@ -89,7 +89,7 @@ class Siege::System
   #
   # @api public
   # @since 0.1.0
-  def stop!(*element_names)
+  def stop(*element_names)
     orchestrator.stop_elements(element_names)
   end
 
@@ -98,7 +98,7 @@ class Siege::System
   #
   # @api public
   # @since 0.1.0
-  def reload!(*element_names)
+  def reload(*element_names)
     orchestrator.reload_elements(element_names)
   end
 

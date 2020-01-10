@@ -34,6 +34,14 @@ class Siege::System::Orchestrator
     thread_safe { entity_resolving.resolve(element_entity_path) }
   end
 
+  # @return [Hash<String,Any>]
+  #
+  # @api private
+  # @since 0.1.0
+  def resolve_system_entities
+    thread_safe { entity_resolving.entities }
+  end
+
   # @return [Hash<String,Symbol>]
   #
   # @api private

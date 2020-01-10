@@ -69,21 +69,35 @@ RSpec.describe 'System functionality' do
       end
 
       element(:logger, loader: LoggingLoader) # NOTE: define with explicit loader klass
+
+      element(:notifier) do
+        init do
+          register(:notifik, (Proc.new {}))
+        end
+
+        start do
+          use 'database.db', as: :mazafaka
+          puts mazafaka
+        end
+      end
     end)
 
     system_instance = Application.build
 
-    system_instance.init!
+    system_instance.init
     puts "---\n#{system_instance.status}\----"
-    system_instance.start!
+    system_instance.start
     puts "---\n#{system_instance.status}\----"
-    system_instance.stop!
+    system_instance.stop
     puts "---\n#{system_instance.status}\----"
 
     # registered entity
-    system_instance['database.db']
+    puts system_instance['database.db']
 
     # registered_entities
+    puts system_instance.entities
 
+    system_instance.start(:notifier)
+    puts system_instance.status
   end
 end

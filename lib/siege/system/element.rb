@@ -26,13 +26,25 @@ class Siege::System::Element
     @loader   = loader
   end
 
+  # @param block [Block]
+  # @yield [entity_name, entity]
+  # @yieldparam entity_name [String]
+  # @yieldparam entity [Siege::System::Element]
+  # @return [Enumerable]
+  #
+  # @api private
+  # @since 0.1.0
+  def each_entity(&block)
+    thread_safe { block_given? ? entities.each(&block) : entities.each }
+  end
+
   # @param entity_name [String, Symbol]
   # @param entity_value [Any]
   #
   # @api private
   # @since 0.1.0
   def register_entity(entity_name, entity_value)
-    entities.register(entity_name) { entity_value }
+    thread_safe { entities.register(entity_name) { entity_value } }
   end
   alias_method :[]=, :register_entity
 
@@ -42,7 +54,7 @@ class Siege::System::Element
   # @api private
   # @since 0.1.0
   def get_entity(entity_name)
-    entities[entity_name]
+    thread_safe { entities[entity_name] }
   end
   alias_method :[], :get_entity
 

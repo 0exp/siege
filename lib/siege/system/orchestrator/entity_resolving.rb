@@ -12,6 +12,23 @@ class Siege::System::Orchestrator::EntityResolving
     @system = system
   end
 
+  # @return [Hash<String,Any>]
+  #
+  # @api private
+  # @since 0.1.0
+  def entities
+    system.elements.each_with_object({}) do |(element_name, element), system_entity_list|
+      element.each_entity do |entity_name, entity|
+        system_entity_name =
+          "#{element_name}" \
+          "#{Siege::System::Element::NameGuard::ELEMENT_ENTITY_PATH_PART_SEPARATOR}" \
+          "#{entity_name}"
+
+        system_entity_list[system_entity_name] = entity
+      end
+    end
+  end
+
   # @param element_entity_path [String]
   # @return [Any]
   #
