@@ -19,7 +19,7 @@ class Siege::System
     #
     # @api public
     # @since 0.1.0
-    def build
+    def build_instance
       Siege::System::Factory.create(self)
     end
   end

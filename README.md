@@ -75,12 +75,12 @@ class Infrastructre < Siege::System
   end
 end
 
-infrastructure = Infrastructre.build
+infrastructure = Infrastructre.build_instance
 
-infrastructure.init!
+infrastructure.init
 infrastructure['database.db'] # => #<DBClient:0x00007f1f991d7701>
 
-infrastructure.start!(:logger)
+infrastructure.start(:logger)
 infrastructure['logging.logger'] # => #<Logger:0x00007f1f991d7702>
 
 # All registered entities:
@@ -95,21 +95,21 @@ infrastructure.entities
 System's Initialization/Starting/Stopping processes:
 
 ```ruby
-app_instance.init! # initialize all elements
-app_instance.init!(:logger) # initialize logger element
+app_instance.init # initialize all elements
+app_instance.init(:logger) # initialize logger element
 
 app_instance.status
 # =>
 { 'logger' => :initialized, 'database' => :non_initialized }
 
-app_instance.start! # start all elements
-app_instance.start!(:logger, :database) # start only the logger element
+app_instance.start # start all elements
+app_instance.start(:logger, :database) # start only the logger element
 
 app_instance.status
 # =>
 { 'logger' => :started, 'database' => :started }
 
-# and stop! / stop!(*element_names) respectively
+# and stop / stop(*element_names) respectively
 ```
 
 ---
