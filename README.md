@@ -24,10 +24,20 @@ require 'siege'
 
 Application-wide infrastructure service that incapsulates the core functionality of your system.
 
+```yaml
+# database.yml
+host: localhost
+```
+
 ```ruby
 class Infrastructure < Siege::System
   element(:database) do
-    init { require 'sequel'; register(:database) { connection = Sequel.build_connection } }
+    configuration do
+      setting :db_config
+      values_file 'database.yml', strict: true
+    end
+
+    init { require 'sequel'; register(:database) { connection = Sequel.build_connection(config['host']) } }
     start { database.connect! }
     stop { database.disconnect! }
 
