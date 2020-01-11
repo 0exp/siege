@@ -40,13 +40,18 @@ class Siege::System::Loader::InvocationContext
 
   # @param entity_name [String, Symbol]
   # @param entity_value [Any]
+  # @param dynamic_entity_value [Block]
   # @return [void]
   #
   # @api private
   # @since 0.1.0
-  def register(entity_name, entity_value)
+  def register(entity_name, entity_value &dynamic_entity_value)
     entity_name = Siege::System::Element::NameGuard.indifferently_accesable_name(entity_name)
+    # TODO:
+    #   - []= for explicit entity_value
+    #   - .register() {} for dynamic entity value with memoized behaviour by default
     ____element____[entity_name] = entity_value
+
     define_singleton_method(entity_name) { ____element____[entity_name] }
     instrument_shadowed_methods(entity_name)
   end
