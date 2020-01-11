@@ -68,7 +68,7 @@ RSpec.describe 'System functionality' do
           setting :pek
         end
 
-        init { register(:db, 'DataBaseClient') }
+        init { register(:db) { 'DataBaseClient' } } # dynamic value registration
         start { puts config.to_h }
         stop { puts db }
       end

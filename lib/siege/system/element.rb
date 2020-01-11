@@ -49,14 +49,20 @@ class Siege::System::Element
   end
 
   # @param entity_name [String, Symbol]
-  # @param entity_value [Any]
+  # @param entity_value [NilClass, Any]
+  # @param dynamic_entity_value [Block]
   #
   # @api private
   # @since 0.1.0
-  def register_entity(entity_name, entity_value)
-    thread_safe { entities.register(entity_name) { entity_value } }
+  def register_entity(entity_name, entity_value = nil, &dynamic_entity_value)
+    thread_safe do
+      if block_given?
+        entities.register(entity_name, memoize: true, &dynamic_entity_value)
+      else
+        entities.register(entity_name) { entity_value }
+      end
+    end
   end
-  alias_method :[]=, :register_entity
 
   # @param entity_name [String, Symbol]
   # @return [Any]
