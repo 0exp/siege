@@ -63,6 +63,8 @@ RSpec.describe 'System functionality' do
 
     stub_const('Infrastructure', Class.new(Siege::System) do
       element(:database) do # NOTE: define with anonimous loader definitions
+        # TODO: settings
+
         init { register(:db, 'DataBaseClient') }
         start { puts db }
         stop { puts db }
@@ -99,5 +101,9 @@ RSpec.describe 'System functionality' do
 
     system_instance.start(:notifier)
     puts system_instance.status
+
+    # TODO:
+    # system_instance.loading_order
+    # system_instance.loading_order=
   end
 end
