@@ -11,7 +11,8 @@ class Siege::System::Orchestrator
   require_relative 'orchestrator/status_list'
   require_relative 'orchestrator/entity_resolving'
 
-  # @rparam system [Siege::System]
+  # @param system [Siege::System]
+  # @return [void]
   #
   # @api private
   # @since 0.1.0

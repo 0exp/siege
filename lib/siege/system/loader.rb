@@ -10,10 +10,10 @@ class Siege::System::Loader
   require_relative 'loader/invocation_context'
 
   # @since 0.1.0
-  include Siege::System::Loader::DSL
+  include Siege::Core::Configurable
 
   # @since 0.1.0
-  include Siege::Core::Configurable
+  include Siege::System::Loader::DSL
 
   # @param invocation_context [Siege::System::Loader::InvocationContext]
   # @option init [Siege::System::Loader::Step::Expression]
@@ -41,8 +41,6 @@ class Siege::System::Loader
     before_stop:,
     after_stop:
   )
-    config # NOTE: bypass the config's lazy-load process - touch and instantiate immidietly
-
     @lock = Siege::Core::Lock.new
     @status = Siege::System::Loader::Status.new
     @invocation_context = invocation_context

@@ -15,13 +15,13 @@ class Siege::System
   include Siege::System::DSL
 
   class << self
+    # @param configurations [Block]
     # @return [Siege::System]
     #
     # @api public
     # @since 0.1.0
-    def build_instance
-      # TODO: element configuration block
-      Siege::System::Factory.create(self)
+    def build_instance(&configurations)
+      Siege::System::Factory.create(self, configurations)
     end
   end
 

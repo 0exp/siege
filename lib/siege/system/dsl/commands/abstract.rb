@@ -34,11 +34,12 @@ class Siege::System::DSL::Commands::Abstract
 
   # @param system_instance [Siege::System]
   # @param system_elements [Siege::System::ElementRegistry]
+  # @param system_configurator [Siege::System::Configurator]
   # @return [void]
   #
   # @api private
   # @since 0.1.0
-  def call(system_instance, system_elements); end
+  def call(system_instance, system_elements, system_configurator); end
 
   # @return [Boolean]
   #

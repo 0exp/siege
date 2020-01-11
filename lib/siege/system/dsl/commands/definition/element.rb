@@ -23,16 +23,18 @@ class Siege::System::DSL::Commands::Definition::Element < Siege::System::DSL::Co
 
   # @param system_instance [Siege::System]
   # @param system_elements [Siege::System::ElementRegistry]
+  # @param system_configurator [Siege::System::Factory::Configurator]
   # @return [void]
   #
   # @api private
   # @since 0.1.0
-  def call(system_instance, system_elements)
+  def call(system_instance, system_elements, system_configurator)
     element = Siege::System::Element::Factory.create(
       element_name,
       loader_klass,
       loader_definition,
-      system_instance
+      system_instance,
+      system_configurator
     )
     system_elements.register(element_name) { element }
   end

@@ -64,8 +64,8 @@ RSpec.describe 'System functionality' do
     stub_const('Infrastructure', Class.new(Siege::System) do
       element(:database) do # NOTE: define with anonimous loader definitions
         configuration do
-          setting :kek, 1
-          setting :pek, 2
+          setting :kek
+          setting :pek
         end
 
         init { register(:db, 'DataBaseClient') }
@@ -76,18 +76,35 @@ RSpec.describe 'System functionality' do
       element(:logger, loader: LoggingLoader) # NOTE: define with explicit loader klass
 
       element(:notifier) do
+        configuration do
+          setting :client, 'ExceptionNotifier'
+        end
+
         init do
           register(:notifik, (Proc.new {}))
         end
 
         start do
           use 'database.db', as: :mazafaka
+          puts "NOTIFIIER"
+          puts config.to_h
           puts mazafaka
         end
       end
     end)
 
-    system_instance = Infrastructure.build_instance
+    system_instance = Infrastructure.build_instance do |settings|
+      settings.configure(:database) do |config|
+        config.kek = 1023123
+        config.pek = '1234567'
+      end
+
+      settings.configure(:notifier) do |config|
+        config.client = 'LoggerNotifier'
+      end
+    end
+
+    system_instance.init
 
     system_instance.init
     puts "---\n#{system_instance.status}\----"

@@ -34,8 +34,8 @@ class Siege::System::Loader::InvocationContext
     Siege::System::Element::NameGuard.path_parts_for(element_entity_path) in { entity: entity }
     ____system____[element_entity_path] # resolving validation emulation
     access_method = as.nil? ? entity : as.to_s
-    define_singleton_method(access_method) { ____system____[element_entity_path] }
     instrument_shadowed_methods(access_method)
+    define_singleton_method(access_method) { ____system____[element_entity_path] }
   end
 
   # @param entity_name [String, Symbol]
@@ -45,15 +45,14 @@ class Siege::System::Loader::InvocationContext
   #
   # @api private
   # @since 0.1.0
-  def register(entity_name, entity_value &dynamic_entity_value)
+  def register(entity_name, entity_value, &dynamic_entity_value)
     entity_name = Siege::System::Element::NameGuard.indifferently_accesable_name(entity_name)
     # TODO:
     #   - []= for explicit entity_value
     #   - .register() {} for dynamic entity value with memoized behaviour by default
     ____element____[entity_name] = entity_value
-
-    define_singleton_method(entity_name) { ____element____[entity_name] }
     instrument_shadowed_methods(entity_name)
+    define_singleton_method(entity_name) { ____element____[entity_name] }
   end
 
   # @since 0.1.0
@@ -88,7 +87,6 @@ class Siege::System::Loader::InvocationContext
   # @api private
   # @since 0.1.0
   def instrument_shadowed_methods(shadowing_method)
-    # TODO: instrumentation layer
     ::Kernel.warn(
       "[Siege::System] Shadowing of previously registered/imported entity :#{shadowing_method}"
     ) if ____singleton_methods____.include?(shadowing_method.to_sym)

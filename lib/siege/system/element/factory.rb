@@ -8,12 +8,25 @@ class Siege::System::Element::Factory
     # @param loader_klass [Class<Siege::System::Loader>, NilClass]
     # @param loader_definition [Proc, NilClass]
     # @param system_instance [Siege::System]
+    # @param system_configurator [Siege::System::Factory::Configurator]
     # @return [Siege::System::Element]
     #
     # @api private
     # @since 0.1.0
-    def create(element_name, loader_klass, loader_definition, system_instance)
-      new(element_name, loader_klass, loader_definition, system_instance).create
+    def create(
+      element_name,
+      loader_klass,
+      loader_definition,
+      system_instance,
+      system_configurator
+    )
+      new(
+        element_name,
+        loader_klass,
+        loader_definition,
+        system_instance,
+        system_configurator
+      ).create
     end
   end
 
@@ -21,15 +34,23 @@ class Siege::System::Element::Factory
   # @param loader_klass [Class<Siege::System::Loader>, NilClass]
   # @param loader_definition [Proc, NilClass]
   # @param system_instance [Siege::System]
+  # @param system_configurator [Siege::System::Factory::Configurator]
   # @return [void]
   #
   # @api private
   # @since 0.1.0
-  def initialize(element_name, loader_klass, loader_definition, system_instance)
-    @element_name      = element_name
-    @loader_klass      = loader_klass
+  def initialize(
+    element_name,
+    loader_klass,
+    loader_definition,
+    system_instance,
+    system_configurator
+  )
+    @element_name = element_name
+    @loader_klass = loader_klass
     @loader_definition = loader_definition
-    @system_instance   = system_instance
+    @system_instance = system_instance
+    @system_configurator = system_configurator
   end
 
   # @return [Siege::System::Element]
@@ -69,6 +90,12 @@ class Siege::System::Element::Factory
   # @since 0.1.0
   attr_reader :system_instance
 
+  # @return [Siege::System::Factory::Configurator]
+  #
+  # @api private
+  # @since 0.1.0
+  attr_reader :system_configurator
+
   # @return allocation [Siege::System::Element]
   #
   # @api private
@@ -97,6 +124,8 @@ class Siege::System::Element::Factory
       Siege::System::Loader::Factory.create(loader_klass, invocation_context)
     when loader_definition
       Siege::System::Loader::Factory.create_from_definitions(loader_definition, invocation_context)
+    end.tap do |loader|
+      system_configurator.configure_element_loader(element_name, loader)
     end
   end
 
