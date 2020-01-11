@@ -46,12 +46,7 @@ class Siege::System::Loader::InvocationContext
   # @since 0.1.0
   def register(entity_name, entity_value = nil, &dynamic_entity_value)
     entity_name = Siege::System::Element::NameGuard.indifferently_accesable_name(entity_name)
-    if block_given?
-      ____element____.register_entity(entity_name, &dynamic_entity_value)
-    else
-      ____element____.register_entity(entity_name, entity_value)
-    end
-
+    ____element____.register_entity(entity_name, entity_value, &dynamic_entity_value)
     define_singleton_method(entity_name) { ____element____[entity_name] }
   end
 
