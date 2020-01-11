@@ -38,7 +38,7 @@ class Infrastructure < Siege::System
       values_file 'database.yml'
     end
 
-    init { require 'sequel'; register(:database) { connection = Sequel.build_connection(config['host']) } }
+    init { require 'sequel'; register(:database, Sequel.build_connection(config['host']) } }
     start { database.connect! }
     stop { database.disconnect! }
 
@@ -49,7 +49,7 @@ class Infrastructure < Siege::System
 
   element(:logger) do
     init { require 'logger' }
-    start { register(:logger) { Logger.new(STDOUT) } }
+    start { register(:logger, Logger.new(STDOUT) } }
     stop { logger.info('[logger] stopped') }
   end
 end
