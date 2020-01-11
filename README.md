@@ -34,7 +34,8 @@ class Infrastructure < Siege::System
   element(:database) do
     configuration do
       setting :db_config
-      values_file 'database.yml', strict: true
+      setting :db_address
+      values_file 'database.yml'
     end
 
     init { require 'sequel'; register(:database) { connection = Sequel.build_connection(config['host']) } }
@@ -53,7 +54,12 @@ class Infrastructure < Siege::System
   end
 end
 
-app_instance = Infrastructure.build # => #<Infrastructure:0x00007f81884d7310>
+app_instance = Infrastructure.build do |settings|
+  settings.configure(:database) do |config|
+    config.db_address = '127.0.0.1'
+  end
+end
+# => #<Infrastructure:0x00007f81884d7310>
 ```
 
 Custom element loader example:
