@@ -20,6 +20,7 @@ class Siege::System
     # @api public
     # @since 0.1.0
     def build_instance
+      # TODO: element configuration block
       Siege::System::Factory.create(self)
     end
   end
