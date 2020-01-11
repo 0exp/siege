@@ -3,13 +3,25 @@
 # @api private
 # @since 0.1.0
 class Siege::System::Loader::InvocationContext
+  # @param system [Siege::System]
+  # @param element [Siege::System::Element]
+  # @param loader [Siege::System::Loader]
   # @return [void]
   #
   # @api private
   # @since 0.1.0
-  def initialize(system, element)
+  def initialize(system, element, loader)
     @____system____  = system
     @____element____ = element
+    @____loader____  = loader
+  end
+
+  # @return [Qonfig::DataSet]
+  #
+  # @api private
+  # @since 0.1.0
+  def config
+    ____loader____.config
   end
 
   # @param element_entity_path [String]
@@ -58,6 +70,12 @@ class Siege::System::Loader::InvocationContext
   # @api private
   # @since 0.1.0
   attr_reader :____element____
+
+  # @return [Siege::System::Loader]
+  #
+  # @api private
+  # @since 0.1.0
+  attr_reader :____loader____
 
   # @param shadowing_method [String]
   # @return [void]

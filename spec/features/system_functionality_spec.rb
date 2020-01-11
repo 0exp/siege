@@ -63,10 +63,13 @@ RSpec.describe 'System functionality' do
 
     stub_const('Infrastructure', Class.new(Siege::System) do
       element(:database) do # NOTE: define with anonimous loader definitions
-        # TODO: settings
+        configuration do
+          setting :kek, 1
+          setting :pek, 2
+        end
 
         init { register(:db, 'DataBaseClient') }
-        start { puts db }
+        start { puts config.to_h }
         stop { puts db }
       end
 
