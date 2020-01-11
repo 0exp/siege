@@ -44,7 +44,7 @@ RSpec.describe 'System functionality' do
   specify 'Complex system definition' do
     stub_const('LoggingLoader', Class.new(Siege::System::Loader))
 
-    stub_const('Application', Class.new(Siege::System) do
+    stub_const('Infrastructure', Class.new(Siege::System) do
       element(:database) do # NOTE: define with anonimous loader definitions
         init { puts 'init!' }
         start { puts 'start!' }
@@ -55,13 +55,13 @@ RSpec.describe 'System functionality' do
     end)
 
     # NOTE: create instance
-    system_instance = Application.build
+    system_instance = Infrastructure.build_instance
   end
 
   specify 'init/star/stop and status' do
     stub_const('LoggingLoader', Class.new(Siege::System::Loader))
 
-    stub_const('Application', Class.new(Siege::System) do
+    stub_const('Infrastructure', Class.new(Siege::System) do
       element(:database) do # NOTE: define with anonimous loader definitions
         init { register(:db, 'DataBaseClient') }
         start { puts db }
@@ -82,7 +82,7 @@ RSpec.describe 'System functionality' do
       end
     end)
 
-    system_instance = Application.build
+    system_instance = Infrastructure.build_instance
 
     system_instance.init
     puts "---\n#{system_instance.status}\----"

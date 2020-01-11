@@ -70,9 +70,9 @@ class Siege::System::Loader
   def init!
     thread_safe do
       next if status.initialized?
-      before_init.call # TODO: run_in_context too
+      run_in_context(before_init)
       status.transit_to_init { run_in_context(init) }
-      after_init.call # TODO: run_in_context too
+      run_in_context(after_init)
     end
   end
 
@@ -83,9 +83,9 @@ class Siege::System::Loader
   def start!
     thread_safe do
       next if status.started?
-      before_start.call # TODO: run_in_context too
+      run_in_context(before_start)
       status.transit_to_start { run_in_context(start) }
-      after_start.call # TODO: run_in_context too
+      run_in_context(after_start)
     end
   end
 
@@ -96,9 +96,9 @@ class Siege::System::Loader
   def stop!
     thread_safe do
       next if status.stopped?
-      before_stop.call # TODO: run_in_context too
+      run_in_context(before_stop)
       status.transit_to_stop { run_in_context(stop) }
-      after_stop.call # TODO: run_in_context too
+      run_in_context(after_stop)
     end
   end
 

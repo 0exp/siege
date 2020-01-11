@@ -20,6 +20,14 @@ class Siege::System::Loader::Step::Callback
     expression.call
   end
 
+  # @return [Proc]
+  #
+  # @api private
+  # @since 0.1.0
+  def to_proc
+    expression
+  end
+
   private
 
   # @return [Proc]
