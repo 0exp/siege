@@ -94,14 +94,21 @@ RSpec.describe 'System functionality' do
     end)
 
     system_instance = Infrastructure.build_instance do |settings|
-      settings.configure(:database) do |config|
+      settings.configure(:database, { pek: 'azaza' }) do |config|
         config.kek = 1023123
-        config.pek = '1234567'
       end
 
       settings.configure(:notifier) do |config|
         config.client = 'LoggerNotifier'
       end
+    end
+
+    system_instance.configure(:database, { pek: 'pusipusi' }) do |config|
+      config.kek = :lel
+    end
+
+    system_instance.configure(:notifier) do |config|
+      config.client = 'RUNTIME!!!'
     end
 
     system_instance.init

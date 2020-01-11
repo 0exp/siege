@@ -26,6 +26,16 @@ class Siege::System::Element
     @loader   = loader
   end
 
+  # @param settings_map [Hash<String|Symbol,Any>]
+  # @param configurations [Block]
+  # @return [void]
+  #
+  # @api private
+  # @since 0.1.0
+  def configure(settings_map = {}, &configurations)
+    thread_safe { loader.configure(settings_map, &configurations) }
+  end
+
   # @param block [Block]
   # @yield [entity_name, entity]
   # @yieldparam entity_name [String]

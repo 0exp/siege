@@ -3,7 +3,8 @@
 # @api private
 # @since 0.1.0
 class Siege::System::Factory::Configurations
-  require_relative 'configurations/command'
+  require_relative 'configurations/abstract_command'
+  require_relative 'configurations/element_command'
   require_relative 'configurations/element_command_set'
 
   # @param system [Siege::System]
@@ -16,19 +17,20 @@ class Siege::System::Factory::Configurations
   end
 
   # @param element_identifier [String, Symbol]
+  # @param settings_map [Hash<String|Symbol,Any>]
   # @param configuration [Block]
   # @return [void]
   #
   # @api private
   # @since 0.1.0
-  def configure(element_identifier, &configuration)
-    __element_configurations__.add(element_identifier, configuration)
+  def configure(element_identifier, settings_map = {}, &configuration)
+    __element_configurations__.add(element_identifier, settings_map, configuration)
   end
 
   # @param element_name [String]
   # @param block [Block]
   # @yield [command]
-  # @yieldparam command [Siege::System::Factory::Configurations::Command]
+  # @yieldparam command [Siege::System::Factory::Configurations::ElementCommand]
   # @return [Enumerable]
   #
   # @api private

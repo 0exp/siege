@@ -10,6 +10,7 @@ class Siege::System::Orchestrator
   require_relative 'orchestrator/reloader'
   require_relative 'orchestrator/status_list'
   require_relative 'orchestrator/entity_resolving'
+  require_relative 'orchestrator/configuring'
 
   # @param system [Siege::System]
   # @return [void]
@@ -24,6 +25,7 @@ class Siege::System::Orchestrator
     @reloader         = Siege::System::Orchestrator::Reloader.new(system)
     @status_list      = Siege::System::Orchestrator::StatusList.new(system)
     @entity_resolving = Siege::System::Orchestrator::EntityResolving.new(system)
+    @configuring      = Siege::System::Orchestrator::Configuring.new(system)
   end
 
   # @param element_entity_path [String]
@@ -33,6 +35,17 @@ class Siege::System::Orchestrator
   # @since 0.1.0
   def resolve_element_entity(element_entity_path)
     thread_safe { entity_resolving.resolve(element_entity_path) }
+  end
+
+  # @param element_name [String, Symbol]
+  # @param settings_map [Hash<String|Symbol,Any>]
+  # @param configurations [Block]
+  # @return [void]
+  #
+  # @api private
+  # @since 0.1.0
+  def configure(element_name, settings_map = {}, &configurations)
+    thread_safe { configuring.configure(element_name, settings_map, &configurations) }
   end
 
   # @return [Hash<String,Any>]
@@ -119,6 +132,12 @@ class Siege::System::Orchestrator
   # @api private
   # @since 0.1.0
   attr_reader :entity_resolving
+
+  # @return [Siege::System::Orchestrator::Configuring]
+  #
+  # @api private
+  # @since 0.1.0
+  attr_reader :configuring
 
   # @param block [Block]
   # @return [Any]

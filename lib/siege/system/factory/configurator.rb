@@ -32,7 +32,7 @@ class Siege::System::Factory::Configurator
   # @since 0.1.0
   def configure_element_loader(element_name, loader)
     configurations.each_element_config(element_name) do |command|
-      loader.configure(&command)
+      loader.configure(command.settings_map, &command.expression)
     end
   end
 

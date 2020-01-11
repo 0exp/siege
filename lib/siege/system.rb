@@ -41,6 +41,17 @@ class Siege::System
     @orchestrator = Siege::System::Orchestrator.new(self)
   end
 
+  # @param element_name [String, Symbol]
+  # @param settings_map [Hash<String|Symbol,Any>]
+  # @param configurations [Block]
+  # @return [void]
+  #
+  # @api public
+  # @since 0.1.0
+  def configure(element_name, settings_map = {}, &configurations)
+    orchestrator.configure(element_name, settings_map, &configurations)
+  end
+
   # @param element_entity_path [String]
   # @return [Any]
   #

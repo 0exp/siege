@@ -54,12 +54,24 @@ class Infrastructure < Siege::System
   end
 end
 
-app_instance = Infrastructure.build do |settings|
-  settings.configure(:database) do |config|
+# instantiate with initial configs
+app_instance = Infrastructure.build_instance do |settings|
+  # hash-based configuration is supported too
+  settings.configure(:database, { db_address: '1.2.3.4' }) do |config|
     config.db_address = '127.0.0.1'
   end
 end
 # => #<Infrastructure:0x00007f81884d7310>
+
+# runtime configuration
+app_instance.configure(:database) do |config|
+  config.db_address = '5.5.5.5'
+end
+
+# hash-based configs
+app_instance.configure(:database, { db_address: '7.7.7.7' }) do |config|
+  # and etc...
+end
 ```
 
 Custom element loader example:
@@ -75,7 +87,7 @@ class Application < Siege::System
   element(:logger, loader: LoggerLoader)
 end
 
-app_instance = Application.build # => #<Application:0x00007f0f0f1d6332>
+app_instance = Application.build_instance # => #<Application:0x00007f0f0f1d6332>
 ```
 
 Resolve registered element entities (you should provide both element name and entity name):
