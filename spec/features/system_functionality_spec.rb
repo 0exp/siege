@@ -143,9 +143,5 @@ RSpec.describe 'System functionality' do
 
     system_instance.start(:notifier)
     puts system_instance.status
-
-    # TODO:
-    # system_instance.loading_order
-    # system_instance.loading_order=
   end
 end
