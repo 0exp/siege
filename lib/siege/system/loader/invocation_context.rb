@@ -31,9 +31,19 @@ class Siege::System::Loader::InvocationContext
   # @api private
   # @since 0.1.0
   def use(element_entity_path, as: nil)
-    Siege::System::Element::NameGuard.path_parts_for(element_entity_path) in { entity: entity }
-    ____system____[element_entity_path] # resolving validation emulation
-    access_method = as.nil? ? entity : as.to_s
+    Siege::System::Element::NameGuard.path_parts_for(element_entity_path) in { element: element_path, entity: entity_path }
+
+    begin
+      ____system____[element_entity_path] # resolving validation emulation
+    rescue Siege::System::SystemElementEntityNotFoundError
+      # try to start system's element and resolve again
+      ____system____.init(element_path)
+      ____system____.start(element_path)
+      ____system____[element_entity_path]
+    end
+
+
+    access_method = as.nil? ? entity_path : as.to_s
     define_singleton_method(access_method) { ____system____[element_entity_path] }
   end
 

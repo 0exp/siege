@@ -58,6 +58,21 @@ RSpec.describe 'System functionality' do
     system_instance = Infrastructure.build_instance
   end
 
+  specify 'cross dependent elements' do
+    stub_const('Infrastructure', Class.new(Siege::System) do
+      element(:database) do
+        init { use('logging.logger') }
+      end
+
+      element(:logging) do
+        start { register(:logger, 'SimpleLogger') }
+      end
+    end)
+
+    system_instance = Infrastructure.build_instance
+    system_instance.init(:database)
+  end
+
   specify 'init/star/stop and status' do
     stub_const('LoggingLoader', Class.new(Siege::System::Loader))
 

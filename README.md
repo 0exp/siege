@@ -90,6 +90,41 @@ end
 app_instance = Application.build_instance # => #<Application:0x00007f0f0f1d6332>
 ```
 
+You can use one element entity from another:
+  - if required element has not being started yet - it will be started;
+  - you can provde `as:` option with the name of the custom access method (element entity's name is used by default);
+  - the element entity name is a string with two parts separated by `.`-symbol: `element_name.entity_name`;
+
+```ruby
+class Infrastructure < Siege::System
+  element(:database) do
+    init do
+      use 'logging.logger', as: :log # .log
+      use 'alerts.notifier' # .notifier
+
+      log.info('test')
+      notifier.call('notification')
+    end
+  end
+
+  element(:logging) do
+    init {}
+    start { register(:logger, Logger.new(STDOUT)) } # entity registration
+  end
+
+  element(:alerts) do
+    init { register(:notifier, Notifier.new) } # entity registration
+  end
+end
+
+app_instance = Infrastructure.build_instance
+
+app_instance.init(:database)
+app_instance.status
+# =>
+{ 'database' => :initialized, 'logging' => :started, 'alerts' => :started }
+```
+
 Resolve registered element entities (you should provide both element name and entity name):
 
 ```ruby
