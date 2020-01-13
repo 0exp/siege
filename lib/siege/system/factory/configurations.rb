@@ -7,7 +7,6 @@ class Siege::System::Factory::Configurations
   require_relative 'configurations/element_command'
   require_relative 'configurations/element_command_set'
 
-  # @param system [Siege::System]
   # @return [void]
   #
   # @api private
