@@ -105,15 +105,6 @@ class Siege::System
     orchestrator.stop_elements(element_names)
   end
 
-  # @param element_names [Array<String, Symbol>]
-  # @return [void]
-  #
-  # @api public
-  # @since 0.1.0
-  def reload(*element_names)
-    orchestrator.reload_elements(element_names)
-  end
-
   private
 
   # @return [Siege::System::Orchestrator]
