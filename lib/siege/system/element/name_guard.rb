@@ -39,7 +39,7 @@ module Siege::System::Element::NameGuard
     def prevent_name_incomparabilities!(*names)
       unless (names.all? { |name| name.is_a?(String) || name.is_a?(Symbol) })
         raise(Siege::System::ArgumentError, <<~ERROR_MESSAGE)
-          System element/entity name should be a type of string or a symbol
+          System element/entity name should be a type of string or symbol
         ERROR_MESSAGE
       end
     end
