@@ -6,4 +6,5 @@ module Siege::Core
   require_relative 'core/lock'
   require_relative 'core/container'
   require_relative 'core/configurable'
+  require_relative 'core/randomizer'
 end
