@@ -15,8 +15,7 @@ class Siege::System::Instrumentation
   #
   # @api private
   # @since 0.1.0
-  def initialize
-  end
+  def initialize; end
 
   # @param event [String]
   # @param listener [Block]
@@ -24,8 +23,7 @@ class Siege::System::Instrumentation
   #
   # @api private
   # @since 0.1.0
-  def subscribe(event, &listener)
-  end
+  def subscribe(event, &listener); end
 
   # @param event [String]
   # @param logic [Block]
@@ -33,8 +31,7 @@ class Siege::System::Instrumentation
   #
   # @api private
   # @since 0.1.0
-  def instrument(event, &logic)
-  end
+  def instrument(event, &logic); end
 end
 
 __END__

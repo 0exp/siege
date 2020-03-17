@@ -7,13 +7,13 @@ class Siege::System::Instrumentation::Event
   #
   # @api private
   # @since 0.1.0
-  NO_PAYLOAD = {}
+  NO_PAYLOAD = {}.freeze
 
   # @return [Hash]
   #
   # @api private
   # @since 0.1.0
-  NO_METADATA = {}
+  NO_METADATA = {}.freeze
 
   # @return [String]
   #
