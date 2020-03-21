@@ -187,6 +187,8 @@ app_instance.status
 
 # Siege::Tooling::Instrumentation
 
+- documentation is coming...
+
 ---
 
 ## Contributing
