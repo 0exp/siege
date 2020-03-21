@@ -20,6 +20,14 @@ require 'siege'
 
 ---
 
+# Usage
+
+- [Modular Infrustructure System](#siegesystem)
+- [Generic Instrumenter](#siegetoolinginstrumentation)
+
+
+---
+
 ## Siege::System
 
 Application-wide infrastructure service that incapsulates the core functionality of your system.
@@ -174,6 +182,10 @@ app_instance.status
 
 # and stop / stop(*element_names) respectively
 ```
+
+---
+
+# Siege::Tooling::Instrumentation
 
 ---
 
