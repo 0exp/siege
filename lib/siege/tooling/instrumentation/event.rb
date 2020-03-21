@@ -2,7 +2,9 @@
 
 # @api public
 # @since 0.1.0
-class Siege::System::Instrumentation::Event
+class Siege::Tooling::Instrumentation::Event
+  require_relative 'event/factory'
+
   # @return [Hash]
   #
   # @api private
