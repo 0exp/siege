@@ -22,7 +22,7 @@ require 'siege'
 
 # Usage
 
-- [Modular Infrustructure System](#siegesystem)
+- [Modular Application Skeleton](#siegesystem)
 - [Generic Instrumenter](#siegetoolinginstrumentation)
 
 
