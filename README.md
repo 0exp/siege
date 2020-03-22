@@ -187,7 +187,61 @@ app_instance.status
 
 # Siege::Tooling::Instrumentation
 
-- documentation is coming...
+- Usage
+
+```ruby
+instrumenter = Siege::Tooling::Instrumentation.build_instance
+
+# --- subscribe ---
+subscriber1 = instrumenter.subscribe('*') do |event|
+  # some logic
+end
+
+subscriber2 = instrumenter.subscribe('user.#') do |event|
+  # some logic
+end
+
+subscriber3 = instrumenter.subscribe('user.created') do |event|
+  # some logic
+end
+
+# --- instrument ---
+instrumenter.instrument('user.created') do |payload:, metadata:|
+  payload[:user_id] = 12345
+  metadata[:framework] = 'ActiveRecord'
+  # - subscriber1
+  # - subscriber2
+  # - subscriber3
+end
+
+instrumenter.instrument('user.updated') do |payload:, metadata:|
+  # - subscriber1
+  # - subscriber2
+end
+
+instrumenter.instrument('system.fail') do |payload:, metadata:|
+  payload[:module] = 'logger'
+  # - subscriber1
+end
+
+# --- unsubscribe ---
+instrumenter.unsubscribe(subscriber1)
+instrumenter.unsubscribe(subscriber2)
+instrumenter.unsubscribe(subscriber3)
+```
+
+- Event Structure (`Siege::Tooling::Instrumentation::Event`)
+
+```ruby
+event.id # => UUID
+event.name # => user.created (for example)
+event.start_time # an instance of Time
+event.end_time # an instance of Time
+event.payload # initialized during instrumentation
+event.metadata # initialized during instrumentation
+
+event.to_h # => { id: ?, name: ?, start_time: ?, end_time: ?, payload: ?, metadata: ? }
+```
 
 ---
 
