@@ -17,7 +17,11 @@ class Siege::Toolig::Instrumentation::Notifier
   #
   # @api private
   # @since 0.1.0
-  def notify(event); end
+  def notify(event)
+    subscribers.each do |subscriber|
+      subscriber.call(event) if subscriber.listen?(event)
+    end
+  end
 
   private
 

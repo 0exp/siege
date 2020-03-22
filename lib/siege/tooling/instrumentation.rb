@@ -6,6 +6,7 @@ class Siege::Tooling::Instrumentation
   require_relative 'instrumentation/errors'
   require_relative 'instrumentation/factory'
   require_relative 'instrumentation/event'
+  require_relative 'instrumentation/event_matcher'
   require_relative 'instrumentation/event_processor'
   require_relative 'instrumentation/subscriber'
   require_relative 'instrumentation/subscriber_list'
@@ -32,14 +33,14 @@ class Siege::Tooling::Instrumentation
     @subscribers = subscribers
   end
 
-  # @param event [String]
+  # @param event_pattern [String]
   # @param listener [Block]
   # @return [Siege::Tooling::Instrumentation::Subscriber]
   #
   # @api private
   # @since 0.1.0
   def subscribe(event_pattern, &listener)
-    subscriber = Subscriber::Factory.create(event, listener)
+    subscriber = Subscriber::Factory.create(event_pattern, listener)
     subscribers.add_subscriber(subscriber)
   end
 
@@ -52,7 +53,7 @@ class Siege::Tooling::Instrumentation
     subscribers.remove_subscriber(subscriber)
   end
 
-  # @param event [String]
+  # @param event_pattern [String]
   # @option payload [Hash]
   # @option metadata [Hash]
   # @param logic [Block]
@@ -60,8 +61,8 @@ class Siege::Tooling::Instrumentation
   #
   # @api private
   # @since 0.1.0
-  def instrument(event, payload: Event::NO_PAYLOAD, metadata: Event::NO_METADATA, &logic)
-    EventProcessor.process_event(event, payload, metadata, logic).tap do |event|
+  def instrument(event_pattern, payload: Event::NO_PAYLOAD, metadata: Event::NO_METADATA, &logic)
+    EventProcessor.process_event(event_pattern, payload, metadata, logic).tap do |event|
       notifier.notify(event)
     end
   end

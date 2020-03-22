@@ -2,7 +2,7 @@
 
 # @api private
 # @since 0.1.0
-class Siege::System::Instrumentation::SubscriberList
+class Siege::Tooling::Instrumentation::SubscriberList
   # @since 0.1.0
   include Enumerable
 
@@ -15,7 +15,7 @@ class Siege::System::Instrumentation::SubscriberList
     @lock = Siege::Core::Lock.new
   end
 
-  # @param [Siege::System::Instrumentation::Subscriber]
+  # @param [Siege::Tooling::Instrumentation::Subscriber]
   # @return [void]
   #
   # @api private
@@ -24,7 +24,7 @@ class Siege::System::Instrumentation::SubscriberList
     thread_safe { list.push(subscriber) }
   end
 
-  # @param [Siege::System::Instrumentation::Subscriber]
+  # @param [Siege::Tooling::Instrumentation::Subscriber]
   # @return [void]
   #
   # @api private
@@ -34,17 +34,19 @@ class Siege::System::Instrumentation::SubscriberList
   end
 
   # @param block [Block]
+  # @yield [subscriber]
+  # @yieldparam subscriber [Siege::Tooling::Instrumentation::Susbcriber]
   # @return [Enumerable]
   #
   # @api private
   # @since 0.1.0
   def each(&block)
-    thread_safe { block_given? ? list.each(&block) : list.each }
+    block_given? ? list.each(&block) : list.each
   end
 
   private
 
-  # @return [Array<Siege::System::Instrumentation::Subscriber>]
+  # @return [Array<Siege::Tooling::Instrumentation::Subscriber>]
   #
   # @api private
   # @since 0.1.0
