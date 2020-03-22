@@ -17,7 +17,7 @@ class Siege::Tooling::Instrumentation
     #
     # @api public
     # @since 0.1.0
-    def create
+    def build_instance
       Siege::Tooling::Instrumentation::Factory.create
     end
   end
@@ -40,8 +40,9 @@ class Siege::Tooling::Instrumentation
   # @api private
   # @since 0.1.0
   def subscribe(event_pattern, &listener)
-    subscriber = Subscriber::Factory.create(event_pattern, listener)
-    subscribers.add_subscriber(subscriber)
+    Subscriber::Factory.create(event_pattern, listener).tap do |subscriber|
+      subscribers.add_subscriber(subscriber)
+    end
   end
 
   # @param subscriber [Siege::Tooling::Instrumentation::Subscriber]
@@ -50,7 +51,7 @@ class Siege::Tooling::Instrumentation
   # @api private
   # @since 0.1.0
   def unsubscribe(subscriber)
-    subscribers.remove_subscriber(subscriber)
+    subscriber.tap { subscribers.remove_subscriber }
   end
 
   # @param event_pattern [String]
@@ -61,11 +62,13 @@ class Siege::Tooling::Instrumentation
   #
   # @api private
   # @since 0.1.0
-  def instrument(event_pattern, payload: Event::NO_PAYLOAD, metadata: Event::NO_METADATA, &logic)
+  # rubocop:disable Layout/LineLength
+  def instrument(event_pattern, payload: Event::NO_PAYLOAD.dup, metadata: Event::NO_METADATA.dup, &logic)
     EventProcessor.process_event(event_pattern, payload, metadata, logic).tap do |event|
       notifier.notify(event)
     end
   end
+  # rubocop:enable Layout/LineLength
 
   private
 

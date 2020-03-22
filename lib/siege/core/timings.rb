@@ -3,6 +3,8 @@
 # @api public
 # @since 0.1.0
 module Siege::Core::Timings
+  module_function
+
   # @return [Float]
   #
   # @api public

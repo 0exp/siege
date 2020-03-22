@@ -9,6 +9,7 @@ SimpleCov.start { add_filter 'spec' }
 require 'bundler/setup'
 require 'siege'
 require 'pry'
+require 'timecop'
 
 RSpec.configure do |config|
   Kernel.srand config.seed
@@ -17,5 +18,6 @@ RSpec.configure do |config|
   config.order = :random
   config.shared_context_metadata_behavior = :apply_to_host_groups
   config.expect_with(:rspec) { |c| c.syntax = :expect }
+  config.after { Timecop.return }
   Thread.abort_on_exception = true
 end

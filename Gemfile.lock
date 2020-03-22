@@ -69,6 +69,7 @@ GEM
     smart_container (0.6.0)
       smart_engine (~> 0.2)
     smart_engine (0.5.0)
+    timecop (0.9.1)
     unicode-display_width (1.6.1)
 
 PLATFORMS
@@ -82,6 +83,7 @@ DEPENDENCIES
   rspec (~> 3.9)
   siege!
   simplecov (~> 0.18)
+  timecop (~> 0.9)
 
 BUNDLED WITH
    2.1.2

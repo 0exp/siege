@@ -14,7 +14,7 @@ module Siege::Tooling::Instrumentation::EventProcessor
     # @since 0.1.0
     def process_event(event, payload, metadata, logic)
       prevent_incompatabilities!(event, payload, metadata)
-      process_event(event, logic)
+      instrument(event, payload, metadata, logic)
     end
 
     private
@@ -54,10 +54,14 @@ module Siege::Tooling::Instrumentation::EventProcessor
     #
     # @api private
     # @since 0.1.0
-    def process_event(event, payload, metadata, logic)
-      time_start = Siege::Core::Timings.current_time
-      logic.call
-      end_time = Siege::Core::Timings.current_time
+    def instrument(event, payload, metadata, logic)
+      if logic
+        start_time = Siege::Core::Timings.current_time
+        logic.call(payload: payload, metadata: metadata)
+        end_time = Siege::Core::Timings.current_time
+      else
+        start_time = end_time = Siege::Core::Timings.current_time
+      end
 
       Siege::Tooling::Instrumentation::Event::Factory.create(
         name: event,

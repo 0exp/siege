@@ -20,4 +20,12 @@ class Siege::Tooling::Instrumentation::Subscriber::Listener
   def call(event)
     listener.call(event)
   end
+
+  private
+
+  # @return [Siege::Tooling::Instrumentation::Subscriber::Listener]
+  #
+  # @api private
+  # @since 0.1.0
+  attr_reader :listener
 end

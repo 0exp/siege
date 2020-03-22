@@ -38,7 +38,7 @@ class Siege::Tooling::Instrumentation::Event::Factory
     def validate_attributes(name, payload, metadata, start_time, end_time)
       validate_name(name)
       validate_payload(payload)
-      validate_metadata(medatada)
+      validate_metadata(metadata)
       validate_start_time(start_time)
       validate_end_time(end_time)
     end

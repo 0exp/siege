@@ -2,7 +2,7 @@
 
 # @api private
 # @since 0.1.0
-class Siege::Toolig::Instrumentation::Notifier
+class Siege::Tooling::Instrumentation::Notifier
   # @param subscribers [Siege::Toolig::Instrumentation::SubscriberList]
   # @return [void]
   #

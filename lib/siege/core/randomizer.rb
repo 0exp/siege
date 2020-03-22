@@ -5,6 +5,8 @@ require 'securerandom'
 # @api public
 # @since 0.1.0
 module Siege::Core::Randomizer
+  module_function
+
   # @return [String]
   #
   # @api public
