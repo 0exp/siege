@@ -91,7 +91,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  armitage-rubocop (~> 0.80)
+  armitage-rubocop (~> 0.81)
   bundler (~> 2.1)
   pry (~> 0.13)
   rake (~> 13.0)
