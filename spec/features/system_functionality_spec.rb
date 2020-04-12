@@ -96,12 +96,12 @@ RSpec.describe 'System functionality' do
         end
 
         init do
-          register(:notifik, (Proc.new {}))
+          register(:notifik, (proc {}))
         end
 
         start do
           use 'database.db', as: :mazafaka
-          puts "NOTIFIIER"
+          puts 'NOTIFIIER'
           puts config.to_h
           puts mazafaka
         end
