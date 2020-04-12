@@ -2,6 +2,7 @@
 language: ruby
 cache: bundler
 os: linux
+dist: xenial
 before_install: gem install bundler -v 2.1.2
 script:
 - bundle exec rake rubocop
@@ -9,4 +10,4 @@ script:
 jobs:
   fast_finish: true
   include:
-  - rvm: 2.7.0
+  - rvm: 2.7.1
