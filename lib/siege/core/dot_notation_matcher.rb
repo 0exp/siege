@@ -153,8 +153,8 @@ class Siege::Core::DotNotationMatcher
   # @since 0.1.0
   def strip_regexp_string(regexp_string, left: false, right: false)
     pattern = regexp_string
-    pattern = pattern[2..-1] if left && pattern[0..1] == MATCHER_SCOPE_SPLITTER
-    pattern = pattern[0..-3] if right && pattern[-2..-1] == MATCHER_SCOPE_SPLITTER
+    pattern = pattern[2..] if left && pattern[0..1] == MATCHER_SCOPE_SPLITTER
+    pattern = pattern[0..-3] if right && pattern[-2..] == MATCHER_SCOPE_SPLITTER
     pattern
   end
 

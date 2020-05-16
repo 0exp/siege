@@ -53,6 +53,10 @@ class Infrastructure < Siege::System
     after_init { puts '[database] initialized' }
     after_start { puts '[database] started' }
     after_stop { puts '[database] stopped' }
+
+    # before_init {}
+    # before_start {}
+    # before_stop {}
   end
 
   element(:logger) do

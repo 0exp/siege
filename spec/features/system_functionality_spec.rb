@@ -55,7 +55,7 @@ RSpec.describe 'System functionality' do
     end)
 
     # NOTE: create instance
-    system_instance = Infrastructure.build_instance
+    Infrastructure.build_instance
   end
 
   specify 'cross dependent elements' do
