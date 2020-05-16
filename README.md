@@ -253,6 +253,29 @@ event.to_h # => { id: ?, name: ?, start_time: ?, end_time: ?, payload: ?, metada
 
 - async element loading process;
 
+- configurable intialization pipeline:
+
+```ruby
+class HomeInfrastructre < Siege::System
+  pipeline do
+    pipe(:database)
+    pipe(:logger, async: true)
+    pipeline(:async) do # nested pipeline with async loading
+      pipe(:rack_logger)
+    end
+    pipe(SystemInfrastructure, async: true) # another siege subsystem
+  end
+end
+```
+
+- system composition:
+
+```ruby
+class Infrastructure < Siege::System
+  sub_system(HomeInfrastructre)
+end
+```
+
 ---
 
 ## Contributing
