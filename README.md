@@ -249,6 +249,12 @@ event.to_h # => { id: ?, name: ?, start_time: ?, end_time: ?, payload: ?, metada
 
 ---
 
+## Roadmap
+
+- async element loading process;
+
+---
+
 ## Contributing
 
 - Fork it ( https://github.com/0exp/siege/fork )
