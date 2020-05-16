@@ -7,13 +7,18 @@ RSpec.describe 'Instrumentation subsystem' do
   before { Timecop.freeze(time_moment) }
 
   specify 'subscribe and notify' do
-    subscriber_1_data_store = [] # <-- user.updated, user.created, system.fail
-    subscriber_2_data_store = [] # <-- user.created
+    subscriber_1_data_store = [] # <-- user.updated, user.created, system.fail, game.craeted
+    subscriber_2_data_store = [] # <-- user.created, game.created
     subscriber_3_data_store = [] # <-- user.created, user.updated
 
     # generic event
     instrumenter.subscribe('*') do |event|
       subscriber_1_data_store << event.to_h
+    end
+
+    # specific event
+    instrumenter.subscribe('game.created') do |event|
+      subscriber_2_data_store << event.to_h
     end
 
     # specific event
@@ -35,6 +40,12 @@ RSpec.describe 'Instrumentation subsystem' do
       payload[:some_data] = 1
       metadata[:some_metadata] = 2
     end
+
+    instrumenter.instrument(
+      'game.created',
+      payload: { title: 'overwatch' },
+      metadata: { match_duration: '1 hour' }
+    )
 
     instrumenter.instrument('system.fail')
 
@@ -62,6 +73,14 @@ RSpec.describe 'Instrumentation subsystem' do
         end_time: time_moment,
         payload: {},
         metadata: {}
+      ),
+      a_hash_including(
+        id: be_a(String),
+        name: 'game.created',
+        start_time: time_moment,
+        end_time: time_moment,
+        payload: { title: 'overwatch' },
+        metadata: { match_duration: '1 hour' }
       )
     )
 
@@ -73,6 +92,14 @@ RSpec.describe 'Instrumentation subsystem' do
         end_time: time_moment,
         payload: { some_data: 1 },
         metadata: { some_metadata: 2 }
+      ),
+      a_hash_including(
+        id: be_a(String),
+        name: 'game.created',
+        start_time: time_moment,
+        end_time: time_moment,
+        payload: { title: 'overwatch' },
+        metadata: { match_duration: '1 hour' }
       )
     )
 
